@@ -1,0 +1,1150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Savings 🐾 Mobile Fixed Deposit Tracker</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Zen Maru Gothic & Fredoka -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Alpine.js CDN -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              washi: "#FFFCF6",
+              charcoal: "#3E3A39",
+              coral: "#F2A497",
+              yamabuki: "#F6D27A",
+              mizu: "#A8D3E6",
+              wakatake: "#B9DAA5",
+              cream: "#FFF7E6",
+              coralLight: "#FCE4E0",
+              mizuLight: "#E6F3F8",
+              wakatakeLight: "#EEF7E8",
+            },
+            fontFamily: {
+              huninn: ['"Zen Maru Gothic"', '"Fredoka"', "sans-serif"],
+            },
+            boxShadow: {
+              hand: "3px 3px 0px #3E3A39",
+              "hand-sm": "2px 2px 0px #3E3A39",
+              "hand-lg": "5px 5px 0px #3E3A39",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      [x-cloak] {
+        display: none !important;
+      }
+
+      body {
+        font-family: "Zen Maru Gothic", "Fredoka", sans-serif;
+        background-color: #f3efe6;
+        color: #3e3a39;
+        background-image: radial-gradient(#3e3a39 0.7px, transparent 0.7px);
+        background-size: 18px 18px;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Japanese Picture Book Chunky Borders */
+      .border-hand {
+        border: 3px solid #3e3a39;
+      }
+      .border-b-hand {
+        border-bottom: 3px solid #3e3a39;
+      }
+      .border-t-hand {
+        border-top: 3px solid #3e3a39;
+      }
+
+      /* Tactile Button Press Animation */
+      .btn-pop {
+        transition:
+          transform 0.08s ease,
+          box-shadow 0.08s ease;
+      }
+      .btn-pop:active {
+        transform: translate(2px, 2px);
+        box-shadow: 1px 1px 0px #3e3a39 !important;
+      }
+
+      /* Hide Scrollbar for clean mobile experience */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+  <body
+    class="min-h-screen flex items-center justify-center p-0 sm:p-4"
+    x-data="depositApp()"
+  >
+    <!-- Mobile Screen Simulator Container (max-w-[480px]) -->
+    <div
+      class="w-full max-w-[480px] bg-washi min-h-screen sm:min-h-[850px] sm:max-h-[920px] sm:rounded-[36px] border-none sm:border-hand sm:shadow-hand-lg flex flex-col justify-between overflow-hidden relative"
+    >
+      <!-- Header Bar -->
+      <header
+        class="bg-washi border-b-hand px-4 py-3 sticky top-0 z-30 flex items-center justify-between"
+      >
+        <div class="flex items-center space-x-2.5">
+          <div
+            class="w-9 h-9 bg-coral rounded-2xl border-hand flex items-center justify-center shadow-hand-sm p-1"
+          >
+            <!-- <svg
+              class="w-5 h-5 text-charcoal"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.3"
+            >
+              <path
+                d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V19a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-1h4v1a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2.5c2-1 3-2.5 3-4.5 2-1.5 2-4.5 0-5.5-.5-.2-1.5-.5-3-.5z"
+              />
+              <circle cx="16" cy="10" r="1" fill="#3E3A39" />
+            </svg> -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="800px"
+              height="800px"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M19 6.34267C17.35 4.30367 14.8273 3 12 3C7.02944 3 3 7.02944 3 12C3 13.8501 3.55827 15.5699 4.51555 17M21 12C21 16.9706 16.9706 21 12 21C10.961 21 9.96308 20.8239 9.03452 20.5M12 16H13C13.6667 16 15 15.6 15 14C15 12.4 13.6667 12 13 12H11C10.3333 12 9 11.6 9 10C9 8.4 10.3333 8 11 8H12M12 16H9M12 16V18M15 8H12M12 8V6"
+                stroke="#000000"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div>
+            <h1 class="text-base font-black text-charcoal leading-none">
+              Savings 🐾
+            </h1>
+            <span class="text-[10px] font-bold text-slate-500"
+              >Fixed Deposit Calendar & Tracker</span
+            >
+          </div>
+        </div>
+
+        <!-- Quick Action Menu -->
+        <div class="flex items-center space-x-1.5">
+          <button
+            @click="exportData()"
+            class="p-1.5 rounded-xl border-hand bg-cream hover:bg-yamabuki btn-pop text-xs font-black"
+            title="Backup / Export Data"
+          >
+            📥
+          </button>
+          <button
+            @click="openAddModal()"
+            class="px-3 py-1.5 rounded-xl border-hand bg-yamabuki hover:bg-[#f5c752] btn-pop text-xs font-black flex items-center space-x-1 shadow-hand-sm"
+          >
+            <span class="text-sm leading-none">+</span>
+            <span>New Deposit</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Scrollable Mobile Body -->
+      <main
+        class="flex-grow overflow-y-auto px-3.5 py-3 space-y-4 no-scrollbar pb-6"
+      >
+        <!-- Sticky Top Section: Compact Monthly Calendar -->
+        <section
+          class="bg-white rounded-3xl border-hand shadow-hand p-3 space-y-2.5"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span
+                class="w-7 h-7 rounded-xl bg-yamabuki border-hand flex items-center justify-center text-xs shadow-hand-sm"
+                >📅</span
+              >
+              <div>
+                <h2 class="text-xs font-black text-charcoal">
+                  Maturity Calendar
+                </h2>
+                <p class="text-[9px] font-bold text-slate-400">
+                  Tap date to view maturing deposits
+                </p>
+              </div>
+            </div>
+
+            <!-- Month Nav -->
+            <div class="flex items-center space-x-1">
+              <button
+                @click="prevMonth()"
+                class="w-6 h-6 rounded-lg border-hand bg-washi hover:bg-cream btn-pop text-[10px] font-black flex items-center justify-center"
+              >
+                ◀
+              </button>
+              <span
+                class="text-xs font-black text-charcoal min-w-[80px] text-center"
+                x-text="calendarMonthLabel"
+              ></span>
+              <button
+                @click="nextMonth()"
+                class="w-6 h-6 rounded-lg border-hand bg-washi hover:bg-cream btn-pop text-[10px] font-black flex items-center justify-center"
+              >
+                ▶
+              </button>
+            </div>
+          </div>
+
+          <!-- Calendar Grid -->
+          <div class="bg-washi rounded-2xl p-2 border-hand">
+            <!-- Weekday Header -->
+            <div
+              class="grid grid-cols-7 text-center font-black text-[10px] text-slate-500 mb-1 border-b border-slate-200 pb-0.5"
+            >
+              <div class="text-coral">Sun</div>
+              <div>Mon</div>
+              <div>Tue</div>
+              <div>Wed</div>
+              <div>Thu</div>
+              <div>Fri</div>
+              <div>Sat</div>
+            </div>
+
+            <!-- Days -->
+            <div class="grid grid-cols-7 gap-1 text-center">
+              <template x-for="blank in calendarBlanks" :key="'b-' + blank">
+                <div class="h-7"></div>
+              </template>
+
+              <template x-for="date in calendarDays" :key="'d-' + date">
+                <div
+                  @click="selectCalendarDate(date)"
+                  class="h-8 rounded-lg border border-transparent p-0.5 flex flex-col items-center justify-between cursor-pointer transition relative"
+                  :class="{
+                                    'border-hand bg-cream font-black shadow-hand-sm': isSelectedDate(date),
+                                    'hover:bg-slate-100': !isSelectedDate(date)
+                                 }"
+                >
+                  <span
+                    class="text-[10px] font-bold"
+                    :class="isToday(date) ? 'bg-coral text-white rounded-full w-4 h-4 flex items-center justify-center text-[9px] font-black' : 'text-charcoal'"
+                    x-text="date"
+                  ></span>
+
+                  <!-- Maturing Badge Marker -->
+                  <template x-if="getMaturedDepositsForDate(date).length > 0">
+                    <div
+                      class="flex items-center space-x-0.5 bg-coral text-white px-1 rounded-md border border-charcoal text-[8px] font-black leading-none transform -translate-y-0.5 shadow-hand-sm py-[2px]"
+                    >
+                      <span>❗️</span>
+                      <span
+                        x-text="getMaturedDepositsForDate(date).length"
+                      ></span>
+                    </div>
+                  </template>
+                </div>
+              </template>
+            </div>
+          </div>
+
+          <!-- Active Date Filter Alert Banner -->
+          <template x-if="selectedDateFilter">
+            <div
+              class="bg-coralLight rounded-2xl p-2 border-hand flex items-center justify-between text-xs"
+            >
+              <div class="flex items-center space-x-1.5">
+                <span class="text-sm">🔔</span>
+                <div>
+                  <span
+                    class="font-black text-charcoal block text-[11px]"
+                    x-text="'Matures on ' + selectedDateFilter"
+                  ></span>
+                  <span
+                    class="text-[9px] font-bold text-slate-600"
+                    x-text="selectedDateDepositsCount + ' deposit(s) found'"
+                  ></span>
+                </div>
+              </div>
+              <button
+                @click="selectedDateFilter = null"
+                class="bg-white px-2 py-0.5 rounded-xl border-hand text-[10px] font-black hover:bg-slate-100 btn-pop"
+              >
+                Clear
+              </button>
+            </div>
+          </template>
+        </section>
+
+        <!-- Summary Cards Section -->
+        <section class="grid grid-cols-3 gap-2">
+          <!-- Total Principal -->
+          <div
+            class="bg-mizuLight rounded-2xl p-2.5 border-hand shadow-hand flex flex-col justify-between"
+          >
+            <span
+              class="text-[9px] font-black bg-mizu px-1.5 py-0.5 rounded-full border-hand text-charcoal w-max"
+              >💰 Principal</span
+            >
+            <div
+              class="text-xs font-black text-charcoal mt-1 tracking-tight truncate"
+              x-text="formatCurrencyShort(totalPrincipal)"
+            ></div>
+          </div>
+
+          <!-- Total Interest -->
+          <div
+            class="bg-coralLight rounded-2xl p-2.5 border-hand shadow-hand flex flex-col justify-between"
+          >
+            <span
+              class="text-[9px] font-black bg-coral px-1.5 py-0.5 rounded-full border-hand text-charcoal w-max"
+              >🌱 Interest</span
+            >
+            <div
+              class="text-xs font-black text-emerald-800 mt-1 tracking-tight truncate"
+              x-text="formatCurrencyShort(totalInterest)"
+            ></div>
+          </div>
+
+          <!-- Active Count -->
+          <div
+            class="bg-cream rounded-2xl p-2.5 border-hand shadow-hand flex flex-col justify-between"
+          >
+            <span
+              class="text-[9px] font-black bg-yamabuki px-1.5 py-0.5 rounded-full border-hand text-charcoal w-max"
+              >🏦 Active</span
+            >
+            <div
+              class="text-xs font-black text-charcoal mt-1 tracking-tight"
+              x-text="activeDepositsCount + ' / ' + deposits.length"
+            ></div>
+          </div>
+        </section>
+
+        <!-- Filter Tabs & Search Bar -->
+        <section class="space-y-2">
+          <div
+            class="flex items-center space-x-1 overflow-x-auto no-scrollbar pb-0.5"
+          >
+            <button
+              @click="statusFilter = 'all'; selectedDateFilter = null"
+              :class="statusFilter === 'all' && !selectedDateFilter ? 'bg-charcoal text-washi' : 'bg-white text-charcoal hover:bg-slate-100'"
+              class="px-2.5 py-1 rounded-xl border-hand text-[10px] font-black btn-pop whitespace-nowrap"
+            >
+              All (<span x-text="deposits.length"></span>)
+            </button>
+            <button
+              @click="statusFilter = 'active'; selectedDateFilter = null"
+              :class="statusFilter === 'active' ? 'bg-wakatake text-charcoal' : 'bg-white text-charcoal hover:bg-slate-100'"
+              class="px-2.5 py-1 rounded-xl border-hand text-[10px] font-black btn-pop whitespace-nowrap"
+            >
+              🌱 Active (<span x-text="activeDepositsCount"></span>)
+            </button>
+            <button
+              @click="statusFilter = 'matured'; selectedDateFilter = null"
+              :class="statusFilter === 'matured' ? 'bg-yamabuki text-charcoal' : 'bg-white text-charcoal hover:bg-slate-100'"
+              class="px-2.5 py-1 rounded-xl border-hand text-[10px] font-black btn-pop whitespace-nowrap"
+            >
+              🎉 Matured (<span x-text="maturedDepositsCount"></span>)
+            </button>
+          </div>
+
+          <!-- Search Input & Quick Add Row -->
+          <div class="flex items-center space-x-2">
+            <div class="relative flex-grow">
+              <input
+                type="text"
+                x-model="searchQuery"
+                placeholder="Search Bank, Account or Note..."
+                class="w-full bg-white pl-7 pr-3 py-1.5 rounded-2xl border-hand text-xs font-bold placeholder-slate-400 focus:outline-none focus:bg-cream"
+              />
+              <span class="absolute left-2.5 top-1.5 text-xs">🔍</span>
+            </div>
+            <!-- <button
+              @click="openAddModal()"
+              class="px-3 py-1.5 bg-yamabuki hover:bg-[#f5c752] rounded-2xl border-hand text-xs font-black text-charcoal btn-pop shadow-hand-sm whitespace-nowrap flex items-center space-x-1"
+            >
+              <span>+ Add</span>
+            </button> -->
+          </div>
+        </section>
+
+        <!-- Toggle View: Mobile Stacked Cards / Compact Table -->
+        <div class="flex justify-between items-center px-1">
+          <span
+            class="text-[10px] font-black text-slate-500 uppercase tracking-wider"
+            >Deposit Records</span
+          >
+          <button
+            @click="viewMode = viewMode === 'cards' ? 'table' : 'cards'"
+            class="text-[10px] font-black text-charcoal bg-white px-2 py-0.5 rounded-lg border-hand btn-pop"
+          >
+            <span
+              x-text="viewMode === 'cards' ? '📋 Table View' : '🎴 Card View'"
+            ></span>
+          </button>
+        </div>
+
+        <!-- View 1: Mobile Stacked Card View -->
+        <template x-if="viewMode === 'cards'">
+          <div class="space-y-3">
+            <template x-for="item in filteredDeposits" :key="item.id">
+              <div
+                class="bg-white rounded-3xl p-3.5 border-hand shadow-hand space-y-2.5 relative"
+              >
+                <!-- Card Header -->
+                <div class="flex justify-between items-start">
+                  <div>
+                    <span
+                      class="text-[10px] font-mono text-slate-400 block"
+                      x-text="item.accountNo"
+                    ></span>
+                    <h3
+                      class="text-sm font-black text-charcoal flex items-center space-x-1 justify-center"
+                    >
+                      <!-- <span>🏦</span> -->
+                      <div class="w-5 h-5 flex items-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20px"
+                          height="20px"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <path
+                            d="M3 19H21M12 12V19M18 12V19M6 12V19M12.4472 3.22361L20.59 7.29502C21.4395 7.71974 21.1372 9 20.1875 9H3.81246C2.86276 9 2.56053 7.71974 3.40997 7.29502L11.5528 3.22361C11.8343 3.08284 12.1657 3.08284 12.4472 3.22361Z"
+                            stroke="#000000"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                      </div>
+                      <span x-text="item.bankName"></span>
+                    </h3>
+                  </div>
+                  <template x-if="isMatured(item.endDate)">
+                    <span
+                      class="bg-yamabuki text-charcoal text-[9px] font-black px-2 py-0.5 rounded-full border-hand"
+                    >
+                      🎉 Matured
+                    </span>
+                  </template>
+                  <template x-if="!isMatured(item.endDate)">
+                    <span
+                      class="bg-wakatake text-charcoal text-[9px] font-black px-2 py-0.5 rounded-full border-hand"
+                    >
+                      🌱 Active
+                    </span>
+                  </template>
+                </div>
+
+                <!-- Notes Tag -->
+                <template x-if="item.notes">
+                  <div
+                    class="bg-cream rounded-xl p-1.5 border-hand text-[10px] font-bold text-slate-700 flex items-center space-x-1"
+                  >
+                    <span>📝</span>
+                    <span x-text="item.notes"></span>
+                  </div>
+                </template>
+
+                <!-- Key Numbers Grid -->
+                <div
+                  class="bg-washi rounded-2xl p-2.5 border-hand grid grid-cols-2 gap-2 text-xs"
+                >
+                  <div>
+                    <span class="text-slate-400 font-bold block text-[9px]"
+                      >Principal Amount</span
+                    >
+                    <span
+                      class="font-black text-charcoal text-xs"
+                      x-text="formatCurrency(item.principal)"
+                    ></span>
+                  </div>
+                  <div>
+                    <span class="text-slate-400 font-bold block text-[9px]"
+                      >Calculated Interest</span
+                    >
+                    <span
+                      class="font-black text-emerald-800 text-xs"
+                      x-text="formatCurrency(calcInterest(item.principal, item.interestRate, item.months))"
+                    ></span>
+                  </div>
+                  <div class="pt-1 border-t border-slate-200">
+                    <span class="text-slate-400 font-bold block text-[9px]"
+                      >Rate / Tenor</span
+                    >
+                    <span
+                      class="font-black text-charcoal text-[11px]"
+                      x-text="item.interestRate.toFixed(2) + '% / ' + item.months + ' Mo'"
+                    ></span>
+                  </div>
+                  <div class="pt-1 border-t border-slate-200">
+                    <span class="text-slate-400 font-bold block text-[9px]"
+                      >Dates (Start ~ End)</span
+                    >
+                    <span
+                      class="font-black text-charcoal text-[10px]"
+                      x-text="item.startDate + ' ~ ' + item.endDate"
+                    ></span>
+                  </div>
+                </div>
+
+                <!-- Bottom Action Row -->
+                <div class="flex justify-end space-x-1.5 pt-0.5">
+                  <button
+                    @click="editDeposit(item)"
+                    class="bg-mizu px-2.5 py-1 rounded-xl border-hand font-black btn-pop text-charcoal text-[10px] flex items-center space-x-1"
+                  >
+                    <span>✏️ Edit</span>
+                  </button>
+                  <button
+                    @click="deleteDeposit(item.id)"
+                    class="bg-coral px-2.5 py-1 rounded-xl border-hand font-black btn-pop text-charcoal text-[10px] flex items-center space-x-1"
+                  >
+                    <span>🗑️ Delete</span>
+                  </button>
+                </div>
+              </div>
+            </template>
+          </div>
+        </template>
+
+        <!-- View 2: Compact Scrollable Table View -->
+        <template x-if="viewMode === 'table'">
+          <div
+            class="bg-white rounded-3xl border-hand shadow-hand overflow-hidden"
+          >
+            <div class="overflow-x-auto no-scrollbar">
+              <table class="w-full text-left border-collapse min-w-[550px]">
+                <thead>
+                  <tr
+                    class="bg-cream border-b-hand text-charcoal font-black text-[10px]"
+                  >
+                    <th class="p-2.5">Bank & Note</th>
+                    <th class="p-2.5">Account No.</th>
+                    <th class="p-2.5 text-right">Principal</th>
+                    <th class="p-2.5">Start ~ End Date</th>
+                    <th class="p-2.5 text-center">Rate</th>
+                    <th class="p-2.5 text-center">Tenor</th>
+                    <th class="p-2.5 text-right">Interest ($)</th>
+                    <th class="p-2.5 text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody
+                  class="divide-y-2 divide-charcoal/10 font-bold text-[11px]"
+                >
+                  <template x-for="item in filteredDeposits" :key="item.id">
+                    <tr class="hover:bg-washi/80">
+                      <td class="p-2.5">
+                        <span
+                          class="font-black text-charcoal block"
+                          x-text="item.bankName"
+                        ></span>
+                        <span
+                          class="text-[9px] text-slate-400 block"
+                          x-text="item.notes || 'No notes'"
+                        ></span>
+                      </td>
+                      <td
+                        class="p-2.5 font-mono text-slate-600 text-[10px]"
+                        x-text="item.accountNo"
+                      ></td>
+                      <td
+                        class="p-2.5 text-right font-black"
+                        x-text="formatCurrency(item.principal)"
+                      ></td>
+                      <td
+                        class="p-2.5 text-[9px] text-slate-600"
+                        x-text="item.startDate + ' ~ ' + item.endDate"
+                      ></td>
+                      <td class="p-2.5 text-center">
+                        <span
+                          class="bg-coralLight px-1.5 py-0.5 rounded-full border-hand text-[9px] font-black"
+                          x-text="item.interestRate.toFixed(2) + '%'"
+                        ></span>
+                      </td>
+                      <td
+                        class="p-2.5 text-center text-[10px]"
+                        x-text="item.months + 'M'"
+                      ></td>
+                      <td
+                        class="p-2.5 text-right font-black text-emerald-800"
+                        x-text="formatCurrency(calcInterest(item.principal, item.interestRate, item.months))"
+                      ></td>
+                      <td class="p-2.5 text-center space-x-1">
+                        <button
+                          @click="editDeposit(item)"
+                          class="p-1 rounded bg-mizu border-hand text-[10px]"
+                        >
+                          ✏️
+                        </button>
+                        <button
+                          @click="deleteDeposit(item.id)"
+                          class="p-1 rounded bg-coral border-hand text-[10px]"
+                        >
+                          🗑️
+                        </button>
+                      </td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </template>
+
+        <!-- Empty State -->
+        <template x-if="filteredDeposits.length === 0">
+          <div
+            class="bg-white rounded-3xl p-6 border-hand shadow-hand text-center space-y-2"
+          >
+            <div class="text-3xl">🌱🎈</div>
+            <p class="font-black text-xs text-charcoal">
+              No deposit records found!
+            </p>
+            <p class="text-[10px] text-slate-400">
+              Tap '+ New Deposit' at the top to add one.
+            </p>
+          </div>
+        </template>
+
+        <!-- Footer Info -->
+        <div class="pt-2 pb-1 text-center border-t border-slate-200">
+          <div
+            class="text-[10px] font-black text-slate-400 flex items-center justify-center space-x-2"
+          >
+            <span>🐾 Savings App</span>
+            <span>•</span>
+            <button
+              @click="resetSampleData()"
+              class="underline hover:text-charcoal"
+            >
+              Reset Demo
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Modal Form (Add / Edit Deposit) -->
+      <div
+        x-show="isModalOpen"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-150"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        class="fixed inset-0 z-50 overflow-y-auto bg-charcoal/40 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4"
+        x-cloak
+      >
+        <div
+          class="bg-washi rounded-t-[32px] sm:rounded-3xl max-w-[480px] w-full p-4 sm:p-5 border-t-hand sm:border-hand shadow-hand-lg relative space-y-3 max-h-[90vh] overflow-y-auto no-scrollbar"
+          @click.away="isModalOpen = false"
+        >
+          <!-- Modal Header -->
+          <div class="flex justify-between items-center pb-2 border-b-hand">
+            <h3
+              class="text-sm sm:text-base font-black text-charcoal flex items-center space-x-1.5"
+            >
+              <span
+                x-text="isEditing ? '✏️ Edit Deposit Record' : '✨ Add New Fixed Deposit'"
+              ></span>
+            </h3>
+            <button
+              @click="isModalOpen = false"
+              class="bg-white p-1 rounded-xl border-hand hover:bg-slate-100 text-charcoal font-black text-xs btn-pop"
+            >
+              ✕
+            </button>
+          </div>
+
+          <!-- Form Fields -->
+          <form @submit.prevent="saveDeposit()" class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-black text-charcoal mb-0.5"
+                >🏦 Bank Name</label
+              >
+              <input
+                type="text"
+                x-model="form.bankName"
+                required
+                placeholder="e.g. HSBC / Standard Chartered / DBS"
+                class="w-full bg-white px-3 py-1.5 rounded-2xl border-hand text-xs font-bold text-charcoal focus:outline-none focus:bg-cream"
+              />
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-black text-charcoal mb-0.5"
+                >💳 Account No.</label
+              >
+              <input
+                type="text"
+                x-model="form.accountNo"
+                required
+                placeholder="e.g. 123-456789-001"
+                class="w-full bg-white px-3 py-1.5 rounded-2xl border-hand text-xs font-mono font-bold text-charcoal focus:outline-none focus:bg-cream"
+              />
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-black text-charcoal mb-0.5"
+                >📝 Notes / Remarks</label
+              >
+              <input
+                type="text"
+                x-model="form.notes"
+                placeholder="e.g. Promotional rate, Branch counter"
+                class="w-full bg-white px-3 py-1.5 rounded-2xl border-hand text-xs font-bold text-charcoal focus:outline-none focus:bg-cream"
+              />
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-[11px] font-black text-charcoal mb-0.5"
+                  >💰 Principal ($)</label
+                >
+                <input
+                  type="number"
+                  step="100"
+                  min="0"
+                  x-model.number="form.principal"
+                  required
+                  placeholder="100000"
+                  class="w-full bg-white px-3 py-1.5 rounded-2xl border-hand text-xs font-bold text-charcoal focus:outline-none focus:bg-cream"
+                />
+              </div>
+              <div>
+                <label class="block text-[11px] font-black text-charcoal mb-0.5"
+                  >📈 Annual Rate (%)</label
+                >
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  x-model.number="form.interestRate"
+                  required
+                  placeholder="3.80"
+                  class="w-full bg-white px-3 py-1.5 rounded-2xl border-hand text-xs font-bold text-charcoal focus:outline-none focus:bg-cream"
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-[11px] font-black text-charcoal mb-0.5"
+                  >⏳ Tenor (Months)</label
+                >
+                <select
+                  x-model.number="form.months"
+                  @change="updateEndDate()"
+                  class="w-full bg-white px-3 py-1.5 rounded-2xl border-hand text-xs font-bold text-charcoal focus:outline-none focus:bg-cream"
+                >
+                  <option value="1">1 Month</option>
+                  <option value="3">3 Months</option>
+                  <option value="6">6 Months</option>
+                  <option value="12">12 Months (1 Yr)</option>
+                  <option value="24">24 Months (2 Yrs)</option>
+                  <option value="36">36 Months (3 Yrs)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-black text-charcoal mb-0.5"
+                  >📅 Start Date</label
+                >
+                <input
+                  type="date"
+                  x-model="form.startDate"
+                  @change="updateEndDate()"
+                  required
+                  class="w-full bg-white px-3 py-1.5 rounded-2xl border-hand text-xs font-bold text-charcoal focus:outline-none focus:bg-cream"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-black text-charcoal mb-0.5"
+                >🏁 Maturity Date (Auto)</label
+              >
+              <input
+                type="date"
+                x-model="form.endDate"
+                required
+                class="w-full bg-cream px-3 py-1.5 rounded-2xl border-hand text-xs font-bold text-charcoal focus:outline-none"
+              />
+            </div>
+
+            <!-- Formula Calculated Interest Box -->
+            <div
+              class="bg-coralLight rounded-2xl p-2.5 border-hand flex justify-between items-center"
+            >
+              <div>
+                <span class="text-xs font-black text-charcoal block"
+                  >🧮 Expected Interest</span
+                >
+                <span class="text-[9px] text-slate-500 font-bold"
+                  >Principal × Rate% × (Months / 12)</span
+                >
+              </div>
+              <span
+                class="text-sm font-black text-emerald-800"
+                x-text="formatCurrency(calcInterest(form.principal, form.interestRate, form.months))"
+              ></span>
+            </div>
+
+            <!-- Modal Actions -->
+            <div class="flex justify-end space-x-2 pt-2 border-t-hand">
+              <button
+                type="button"
+                @click="isModalOpen = false"
+                class="px-3.5 py-1.5 bg-white rounded-2xl border-hand text-xs font-black text-charcoal hover:bg-slate-100 btn-pop"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="px-4 py-1.5 bg-yamabuki rounded-2xl border-hand text-xs font-black text-charcoal hover:bg-[#f5c752] btn-pop shadow-hand-sm"
+              >
+                Save Record ✨
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Application Controller Logic -->
+    <script>
+      function depositApp() {
+        return {
+          deposits: [],
+          searchQuery: "",
+          statusFilter: "all", // 'all', 'active', 'matured'
+          selectedDateFilter: null, // YYYY-MM-DD
+          viewMode: "cards", // 'cards' or 'table'
+          currentCalendarDate: new Date(),
+          isModalOpen: false,
+          isEditing: false,
+          currentId: null,
+          form: {
+            bankName: "",
+            accountNo: "",
+            notes: "",
+            principal: 100000,
+            startDate: new Date().toISOString().split("T")[0],
+            endDate: "",
+            interestRate: 3.8,
+            months: 12,
+          },
+
+          init() {
+            const saved = localStorage.getItem("savings_mobile_deposits_data");
+            if (saved) {
+              try {
+                this.deposits = JSON.parse(saved);
+              } catch (e) {
+                this.deposits = this.getSampleData();
+              }
+            } else {
+              this.deposits = this.getSampleData();
+              this.saveToStorage();
+            }
+            this.updateEndDate();
+          },
+
+          getSampleData() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, "0");
+
+            return [
+              {
+                id: "1",
+                bankName: "HSBC Bank",
+                accountNo: "848-123456-838",
+                notes: "12-Month Online Promo",
+                principal: 200000,
+                startDate: `${year - 1}-${month}-15`,
+                endDate: `${year}-${month}-15`,
+                interestRate: 3.85,
+                months: 12,
+              },
+            ];
+          },
+
+          saveToStorage() {
+            localStorage.setItem(
+              "savings_mobile_deposits_data",
+              JSON.stringify(this.deposits),
+            );
+          },
+
+          resetSampleData() {
+            if (confirm("Reset to demo sample deposit data? 🐾")) {
+              this.deposits = this.getSampleData();
+              this.saveToStorage();
+            }
+          },
+
+          exportData() {
+            const dataStr =
+              "data:text/json;charset=utf-8," +
+              encodeURIComponent(JSON.stringify(this.deposits, null, 2));
+            const downloadAnchor = document.createElement("a");
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute(
+              "download",
+              `savings_deposits_${new Date().toISOString().split("T")[0]}.json`,
+            );
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+          },
+
+          isMatured(endDateStr) {
+            if (!endDateStr) return false;
+            const today = new Date().toISOString().split("T")[0];
+            return endDateStr < today;
+          },
+
+          // Calendar helper functions
+          get calendarMonthLabel() {
+            return this.currentCalendarDate.toLocaleString("default", {
+              month: "short",
+              year: "numeric",
+            });
+          },
+
+          get calendarBlanks() {
+            const year = this.currentCalendarDate.getFullYear();
+            const month = this.currentCalendarDate.getMonth();
+            const firstDay = new Date(year, month, 1).getDay();
+            return Array.from({ length: firstDay }, (_, i) => i);
+          },
+
+          get calendarDays() {
+            const year = this.currentCalendarDate.getFullYear();
+            const month = this.currentCalendarDate.getMonth();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            return Array.from({ length: daysInMonth }, (_, i) => i + 1);
+          },
+
+          prevMonth() {
+            this.currentCalendarDate = new Date(
+              this.currentCalendarDate.getFullYear(),
+              this.currentCalendarDate.getMonth() - 1,
+              1,
+            );
+          },
+
+          nextMonth() {
+            this.currentCalendarDate = new Date(
+              this.currentCalendarDate.getFullYear(),
+              this.currentCalendarDate.getMonth() + 1,
+              1,
+            );
+          },
+
+          getFormattedCalendarDate(day) {
+            const year = this.currentCalendarDate.getFullYear();
+            const month = String(
+              this.currentCalendarDate.getMonth() + 1,
+            ).padStart(2, "0");
+            const dateStr = String(day).padStart(2, "0");
+            return `${year}-${month}-${dateStr}`;
+          },
+
+          getMaturedDepositsForDate(day) {
+            const targetDateStr = this.getFormattedCalendarDate(day);
+            return this.deposits.filter((d) => d.endDate === targetDateStr);
+          },
+
+          isSelectedDate(day) {
+            return (
+              this.selectedDateFilter === this.getFormattedCalendarDate(day)
+            );
+          },
+
+          isToday(day) {
+            const today = new Date();
+            return (
+              today.getFullYear() === this.currentCalendarDate.getFullYear() &&
+              today.getMonth() === this.currentCalendarDate.getMonth() &&
+              today.getDate() === day
+            );
+          },
+
+          selectCalendarDate(day) {
+            const dateStr = this.getFormattedCalendarDate(day);
+            if (this.selectedDateFilter === dateStr) {
+              this.selectedDateFilter = null;
+            } else {
+              this.selectedDateFilter = dateStr;
+            }
+          },
+
+          get selectedDateDepositsCount() {
+            if (!this.selectedDateFilter) return 0;
+            return this.deposits.filter(
+              (d) => d.endDate === this.selectedDateFilter,
+            ).length;
+          },
+
+          // Filters
+          get filteredDeposits() {
+            return this.deposits.filter((d) => {
+              if (this.selectedDateFilter) {
+                return d.endDate === this.selectedDateFilter;
+              }
+
+              const q = this.searchQuery.toLowerCase();
+              const matchesSearch =
+                d.bankName.toLowerCase().includes(q) ||
+                d.accountNo.toLowerCase().includes(q) ||
+                (d.notes && d.notes.toLowerCase().includes(q));
+
+              const matured = this.isMatured(d.endDate);
+              let matchesStatus = true;
+              if (this.statusFilter === "active") matchesStatus = !matured;
+              if (this.statusFilter === "matured") matchesStatus = matured;
+
+              return matchesSearch && matchesStatus;
+            });
+          },
+
+          get activeDepositsCount() {
+            return this.deposits.filter((d) => !this.isMatured(d.endDate))
+              .length;
+          },
+
+          get maturedDepositsCount() {
+            return this.deposits.filter((d) => this.isMatured(d.endDate))
+              .length;
+          },
+
+          get totalPrincipal() {
+            return this.deposits.reduce(
+              (sum, item) => sum + Number(item.principal || 0),
+              0,
+            );
+          },
+
+          get totalInterest() {
+            return this.deposits.reduce(
+              (sum, item) =>
+                sum +
+                this.calcInterest(
+                  item.principal,
+                  item.interestRate,
+                  item.months,
+                ),
+              0,
+            );
+          },
+
+          calcInterest(principal, rate, months) {
+            const p = Number(principal) || 0;
+            const r = Number(rate) || 0;
+            const m = Number(months) || 0;
+            return p * (r / 100) * (m / 12);
+          },
+
+          formatCurrency(amount) {
+            return (
+              "$" +
+              Number(amount).toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })
+            );
+          },
+
+          formatCurrencyShort(amount) {
+            const num = Number(amount) || 0;
+            if (num >= 1000000) return "$" + (num / 1000000).toFixed(1) + "M";
+            if (num >= 1000) return "$" + (num / 1000).toFixed(1) + "k";
+            return "$" + num.toFixed(0);
+          },
+
+          updateEndDate() {
+            if (!this.form.startDate || !this.form.months) return;
+            let start = new Date(this.form.startDate);
+            if (isNaN(start.getTime())) return;
+            start.setMonth(start.getMonth() + Number(this.form.months));
+            this.form.endDate = start.toISOString().split("T")[0];
+          },
+
+          openAddModal() {
+            this.isEditing = false;
+            this.currentId = null;
+            this.form = {
+              bankName: "",
+              accountNo: "",
+              notes: "",
+              principal: 100000,
+              startDate: new Date().toISOString().split("T")[0],
+              endDate: "",
+              interestRate: 3.8,
+              months: 12,
+            };
+            this.updateEndDate();
+            this.isModalOpen = true;
+          },
+
+          editDeposit(item) {
+            this.isEditing = true;
+            this.currentId = item.id;
+            this.form = { ...item };
+            this.isModalOpen = true;
+          },
+
+          saveDeposit() {
+            if (this.isEditing) {
+              const idx = this.deposits.findIndex(
+                (d) => d.id === this.currentId,
+              );
+              if (idx !== -1) {
+                this.deposits[idx] = { ...this.form, id: this.currentId };
+              }
+            } else {
+              const newItem = {
+                ...this.form,
+                id: Date.now().toString(),
+              };
+              this.deposits.push(newItem);
+            }
+            this.saveToStorage();
+            this.isModalOpen = false;
+          },
+
+          deleteDeposit(id) {
+            if (confirm("Delete this deposit record? 🐾")) {
+              this.deposits = this.deposits.filter((d) => d.id !== id);
+              this.saveToStorage();
+            }
+          },
+        };
+      }
+    </script>
+  </body>
+</html>
