@@ -6,90 +6,73 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>Savings 🐾 Mobile Fixed Deposit Tracker</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Savings</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Zen Maru Gothic & Fredoka -->
+    <!-- Google Fonts: Huninn (M PLUS Rounded 1c) & Nunito -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Nunito:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-v1.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon-v1.png">
-    <!-- Alpine.js CDN -->
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-    ></script>
-
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="assets/img/favicon-v1.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="assets/img/favicon-v1.png"
+    />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
-              washi: "#FFFCF6",
-              charcoal: "#3E3A39",
-              coral: "#F2A497",
-              yamabuki: "#F6D27A",
-              mizu: "#A8D3E6",
-              wakatake: "#B9DAA5",
-              cream: "#FFF7E6",
-              coralLight: "#FCE4E0",
-              mizuLight: "#E6F3F8",
-              wakatakeLight: "#EEF7E8",
+              paper: "#FFFCF6",
+              "paper-dark": "#F5F0E6",
+              "paper-card": "#FAF6EE",
+              sage: {
+                50: "#F4F7F4",
+                100: "#E6ECE5",
+                200: "#CAD7C9",
+                500: "#8A9A86",
+                600: "#738A75",
+                700: "#5B6958",
+              },
+              coral: {
+                100: "#FDECE7",
+                200: "#FAD8CE",
+                400: "#EE9B88",
+                500: "#E28771",
+                600: "#D27357",
+              },
+              sand: {
+                100: "#F7EFE2",
+                200: "#EEDFCB",
+                500: "#CBB292",
+              },
             },
             fontFamily: {
-              huninn: ['"Zen Maru Gothic"', '"Fredoka"', "sans-serif"],
-            },
-            boxShadow: {
-              hand: "3px 3px 0px #3E3A39",
-              "hand-sm": "2px 2px 0px #3E3A39",
-              "hand-lg": "5px 5px 0px #3E3A39",
+              huninn: ['"M PLUS Rounded 1c"', '"Nunito"', "sans-serif"],
             },
           },
         },
       };
     </script>
-
     <style>
-      [x-cloak] {
-        display: none !important;
-      }
-
       body {
-        font-family: "Zen Maru Gothic", "Fredoka", sans-serif;
-        background-color: #f3efe6;
-        color: #3e3a39;
-        background-image: radial-gradient(#3e3a39 0.7px, transparent 0.7px);
-        background-size: 18px 18px;
+        font-family: "M PLUS Rounded 1c", "Nunito", sans-serif;
+        background-color: #efece6;
+        color: #383734;
         -webkit-tap-highlight-color: transparent;
       }
-
-      /* Japanese Picture Book Chunky Borders */
-      .border-hand {
-        border: 3px solid #3e3a39;
-      }
-      .border-b-hand {
-        border-bottom: 3px solid #3e3a39;
-      }
-      .border-t-hand {
-        border-top: 3px solid #3e3a39;
-      }
-
-      /* Tactile Button Press Animation */
-      .btn-pop {
-        transition:
-          transform 0.08s ease,
-          box-shadow 0.08s ease;
-      }
-      .btn-pop:active {
-        transform: translate(2px, 2px);
-        box-shadow: 1px 1px 0px #3e3a39 !important;
-      }
-
-      /* Hide Scrollbar for clean mobile experience */
       .no-scrollbar::-webkit-scrollbar {
         display: none;
       }
@@ -97,757 +80,488 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+      .app-container {
+        max-width: 430px;
+        height: 100vh;
+        height: 100dvh;
+        background-color: #fffcf6;
+        margin: 0 auto;
+        position: relative;
+        box-shadow:
+          0 10px 25px -5px rgba(0, 0, 0, 0.05),
+          0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
     </style>
   </head>
-  <body
-    class="min-h-screen flex items-center justify-center p-0 sm:p-4"
-    x-data="depositApp()"
-  >
-    <!-- Mobile Screen Simulator Container (max-w-[480px]) -->
+  <body class="sm:py-4">
     <div
-      class="w-full max-w-[480px] bg-washi min-h-screen sm:min-h-[850px] sm:max-h-[920px] sm:rounded-[36px] border-none sm:border-hand sm:shadow-hand-lg flex flex-col justify-between overflow-hidden relative"
+      class="app-container rounded-none sm:rounded-[40px] border-0 sm:border-[8px] sm:border-stone-800/10"
     >
-      <!-- Header Bar -->
+      <!-- FIXED TOP SECTION: EDITABLE PROFILE, HORIZONTALLY SWIPABLE CALENDAR & ACTIVE PORTFOLIO CARD -->
       <header
-        class="bg-washi border-b-hand px-4 py-3 sticky top-0 z-30 flex items-center justify-between"
+        class="flex-shrink-0 z-30 bg-[#FFFCF6] pt-3 px-5 pb-3 border-b border-stone-200/60 shadow-xs"
       >
-        <div class="flex items-center space-x-2.5">
+        <!-- Top Profile Bar (Editable Name) -->
+        <div class="flex justify-between items-center mb-2">
           <div
-            class="w-9 h-9 bg-coral rounded-2xl border-hand flex items-center justify-center shadow-hand-sm p-1"
+            class="flex items-center space-x-3 cursor-pointer group"
+            onclick="toggleEditProfileName()"
+            title="Click to edit user name"
           >
-            <!-- <svg
-              class="w-5 h-5 text-charcoal"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.3"
+            <div
+              id="user-avatar"
+              class="w-10 h-10 rounded-full bg-coral-100 flex items-center justify-center border border-coral-200 text-coral-600 font-bold text-sm shadow-2xs group-hover:bg-coral-200 transition-colors"
             >
-              <path
-                d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V19a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-1h4v1a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2.5c2-1 3-2.5 3-4.5 2-1.5 2-4.5 0-5.5-.5-.2-1.5-.5-3-.5z"
-              />
-              <circle cx="16" cy="10" r="1" fill="#3E3A39" />
-            </svg> -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="800px"
-              height="800px"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M19 6.34267C17.35 4.30367 14.8273 3 12 3C7.02944 3 3 7.02944 3 12C3 13.8501 3.55827 15.5699 4.51555 17M21 12C21 16.9706 16.9706 21 12 21C10.961 21 9.96308 20.8239 9.03452 20.5M12 16H13C13.6667 16 15 15.6 15 14C15 12.4 13.6667 12 13 12H11C10.3333 12 9 11.6 9 10C9 8.4 10.3333 8 11 8H12M12 16H9M12 16V18M15 8H12M12 8V6"
-                stroke="#000000"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+              JM
+            </div>
+            <div>
+              <p
+                class="text-[11px] text-stone-400 font-medium leading-none flex items-center gap-1"
+              >
+                Welcome back,
+                <i
+                  data-lucide="pencil"
+                  class="w-2.5 h-2.5 opacity-60 group-hover:opacity-100"
+                ></i>
+              </p>
+              <!-- DISPLAY NAME -->
+              <div
+                id="profile-name-display"
+                class="flex items-center space-x-1"
+              >
+                <h1
+                  id="user-name-text"
+                  class="text-base font-bold text-stone-800 leading-tight group-hover:text-coral-600 transition-colors"
+                >
+                  Jose Maria
+                </h1>
+              </div>
+              <!-- EDIT INLINE INPUT (HIDDEN BY DEFAULT) -->
+              <div
+                id="profile-name-edit"
+                class="hidden items-center space-x-1 mt-0.5"
+                onclick="event.stopPropagation()"
+              >
+                <input
+                  type="text"
+                  id="user-name-input"
+                  maxlength="24"
+                  class="px-2 py-0.5 text-xs font-bold text-stone-800 bg-white border border-coral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-coral-400 w-32"
+                  placeholder="Your name"
+                />
+                <button
+                  onclick="saveProfileName(event)"
+                  class="p-1 bg-coral-500 text-white rounded-lg hover:bg-coral-600 transition-colors"
+                >
+                  <i data-lucide="check" class="w-3 h-3"></i>
+                </button>
+                <button
+                  onclick="cancelEditProfileName(event)"
+                  class="p-1 bg-stone-200 text-stone-600 rounded-lg hover:bg-stone-300 transition-colors"
+                >
+                  <i data-lucide="x" class="w-3 h-3"></i>
+                </button>
+              </div>
+            </div>
           </div>
-          <div>
-            <h1 class="text-base font-black text-charcoal leading-none">
-              Savings 🐾
-            </h1>
-            <span class="text-[10px] font-bold text-slate-500"
-              >Fixed Deposit Calendar & Tracker</span
+          <button
+            onclick="openModal()"
+            class="w-9 h-9 rounded-full bg-sage-100 border border-sage-200 flex items-center justify-center text-sage-700 hover:bg-sage-200 transition-colors shadow-xs"
+          >
+            <i data-lucide="plus" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Calendar Header with Month/Year Navigation Controls -->
+        <div class="flex justify-between items-center px-0.5 mb-1.5">
+          <div class="flex items-center space-x-1">
+            <span
+              id="calendar-month-label"
+              class="text-xs font-extrabold text-stone-700 uppercase tracking-wide"
+              >October 2026</span
             >
+            <button
+              onclick="scrollToToday()"
+              class="text-[10px] bg-sage-100 text-sage-700 font-bold px-2 py-0.5 rounded-full hover:bg-sage-200 transition-colors ml-1"
+            >
+              Today
+            </button>
+          </div>
+          <div class="flex items-center space-x-1 text-stone-500">
+            <button
+              onclick="scrollCalendarWeek('left')"
+              class="p-1 hover:bg-stone-100 rounded-full text-stone-600 active:scale-95 transition-transform"
+              title="Previous Week"
+            >
+              <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            </button>
+            <button
+              onclick="scrollCalendarWeek('right')"
+              class="p-1 hover:bg-stone-100 rounded-full text-stone-600 active:scale-95 transition-transform"
+              title="Next Week"
+            >
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
           </div>
         </div>
 
-        <!-- Quick Action Menu -->
-        <div class="flex items-center space-x-1.5">
-          <button
-            @click="exportData()"
-            class="p-1.5 rounded-xl border-hand bg-cream hover:bg-yamabuki btn-pop text-xs font-black"
-            title="Backup / Export Data"
+        <!-- HORIZONTALLY SCROLLABLE / SWIPABLE CALENDAR STRIP -->
+        <div class="relative mb-2.5">
+          <div
+            id="weekly-calendar"
+            class="flex space-x-2 overflow-x-auto no-scrollbar scroll-smooth py-1 snap-x snap-mandatory"
           >
-            📥
-          </button>
-          <button
-            @click="openAddModal()"
-            class="px-3 py-1.5 rounded-xl border-hand bg-yamabuki hover:bg-[#f5c752] btn-pop text-xs font-black flex items-center space-x-1 shadow-hand-sm"
+            <!-- Dynamic Days Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- ACTIVE PORTFOLIO SUMMARY CARD (FIXED AT TOP WITH CALENDAR) -->
+        <div
+          class="relative bg-gradient-to-br from-sand-100/90 via-sage-100/70 to-sage-200/60 rounded-3xl p-4 border border-sage-200/80 shadow-xs overflow-hidden"
+        >
+          <div
+            class="absolute -right-4 -bottom-4 w-28 h-28 bg-sage-500/10 rounded-full blur-xl pointer-events-none"
+          ></div>
+
+          <div class="flex justify-between items-start mb-1">
+            <div>
+              <span
+                class="inline-block text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-white/90 text-sage-700 border border-sage-200 mb-1.5 shadow-2xs"
+              >
+                Active Portfolio
+              </span>
+              <h2 class="text-[11px] text-stone-500 font-bold">
+                Total Active Investment
+              </h2>
+              <div
+                class="text-2xl font-extrabold text-stone-800 mt-0.5"
+                id="total-active-investment"
+              >
+                $0.00
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-[11px] text-stone-500 font-bold block"
+                >Active Interest</span
+              >
+              <span
+                class="text-base font-bold text-coral-600"
+                id="total-interest"
+                >+$0.00</span
+              >
+            </div>
+          </div>
+
+          <!-- Progress & Quick Stats -->
+          <div
+            class="mt-2.5 pt-2 border-t border-stone-300/40 grid grid-cols-2 gap-2 text-xs"
           >
-            <span class="text-sm leading-none">+</span>
-            <span>New Deposit</span>
-          </button>
+            <div
+              class="bg-white/80 rounded-2xl p-2 flex items-center space-x-2 border border-white/60"
+            >
+              <div class="p-1 rounded-xl bg-sage-200/80 text-sage-700">
+                <i data-lucide="vault" class="w-3.5 h-3.5"></i>
+              </div>
+              <div>
+                <span
+                  class="text-[9px] text-stone-400 block font-bold leading-none"
+                  >Active</span
+                >
+                <span
+                  class="font-extrabold text-stone-800 text-xs"
+                  id="active-count"
+                  >0 Deposits</span
+                >
+              </div>
+            </div>
+            <div
+              class="bg-white/80 rounded-2xl p-2 flex items-center space-x-2 border border-white/60"
+            >
+              <div class="p-1 rounded-xl bg-coral-200/80 text-coral-700">
+                <i data-lucide="calendar-check" class="w-3.5 h-3.5"></i>
+              </div>
+              <div>
+                <span
+                  class="text-[9px] text-stone-400 block font-bold leading-none"
+                  >Due This Month</span
+                >
+                <span
+                  class="font-extrabold text-stone-800 text-xs"
+                  id="due-month-count"
+                  >0 Maturing</span
+                >
+              </div>
+            </div>
+          </div>
         </div>
       </header>
 
-      <!-- Main Scrollable Mobile Body -->
+      <!-- MAIN SCROLLABLE CONTENT AREA (ONLY TRANSACTIONS/DEPOSITS SCROLL) -->
       <main
-        class="flex-grow overflow-y-auto px-3.5 py-3 space-y-4 no-scrollbar pb-6"
+        class="flex-1 px-5 pt-3 pb-6 space-y-3 overflow-y-auto no-scrollbar"
       >
-        <!-- Sticky Top Section: Compact Monthly Calendar -->
-        <section
-          class="bg-white rounded-3xl border-hand shadow-hand p-3 space-y-2.5"
-        >
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-              <span
-                class="w-7 h-7 rounded-xl bg-yamabuki border-hand flex items-center justify-center text-xs shadow-hand-sm"
-                >📅</span
-              >
-              <div>
-                <h2 class="text-xs font-black text-charcoal">
-                  Maturity Calendar
-                </h2>
-                <p class="text-[9px] font-bold text-slate-400">
-                  Tap date to view maturing deposits
-                </p>
-              </div>
-            </div>
-
-            <!-- Month Nav -->
-            <div class="flex items-center space-x-1">
-              <button
-                @click="prevMonth()"
-                class="w-6 h-6 rounded-lg border-hand bg-washi hover:bg-cream btn-pop text-[10px] font-black flex items-center justify-center p-1"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="#000000"
-                  width="20px"
-                  height="20px"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="m4.431 12.822 13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645z"
-                  />
-                </svg>
-              </button>
-              <span
-                class="text-xs font-black text-charcoal min-w-[80px] text-center"
-                x-text="calendarMonthLabel"
-              ></span>
-              <button
-                @click="nextMonth()"
-                class="w-6 h-6 rounded-lg border-hand bg-washi hover:bg-cream btn-pop text-[10px] font-black flex items-center justify-center p-1"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="#000000"
-                  width="20px"
-                  height="20px"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M5.536 21.886a1.004 1.004 0 0 0 1.033-.064l13-9a1 1 0 0 0 0-1.644l-13-9A1 1 0 0 0 5 3v18a1 1 0 0 0 .536.886z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          <!-- Calendar Grid -->
-          <div class="bg-washi rounded-2xl p-2 border-hand">
-            <!-- Weekday Header -->
-            <div
-              class="grid grid-cols-7 text-center font-black text-[10px] text-slate-500 mb-1 border-b border-slate-200 pb-0.5"
-            >
-              <div class="text-coral">Sun</div>
-              <div>Mon</div>
-              <div>Tue</div>
-              <div>Wed</div>
-              <div>Thu</div>
-              <div>Fri</div>
-              <div>Sat</div>
-            </div>
-
-            <!-- Days -->
-            <div class="grid grid-cols-7 gap-1 text-center">
-              <template x-for="blank in calendarBlanks" :key="'b-' + blank">
-                <div class="h-7"></div>
-              </template>
-
-              <template x-for="date in calendarDays" :key="'d-' + date">
-                <div
-                  @click="selectCalendarDate(date)"
-                  class="h-8 rounded-lg border border-transparent p-0.5 flex flex-col items-center justify-between cursor-pointer transition relative"
-                  :class="{
-                                    'border-hand bg-cream font-black shadow-hand-sm': isSelectedDate(date),
-                                    'hover:bg-slate-100': !isSelectedDate(date)
-                                 }"
-                >
-                  <span
-                    class="text-[10px] font-bold"
-                    :class="isToday(date) ? 'bg-coral text-white rounded-full w-4 h-4 flex items-center justify-center text-[9px] font-black' : 'text-charcoal'"
-                    x-text="date"
-                  ></span>
-
-                  <!-- Maturing Badge Marker -->
-                  <template x-if="getMaturedDepositsForDate(date).length > 0">
-                    <div
-                      class="flex items-center space-x-0.5 bg-coral text-white px-1 rounded-md border border-charcoal text-[8px] font-black leading-none transform -translate-y-0.5 shadow-hand-sm py-[2px]"
-                    >
-                      <span>❗️</span>
-                      <span
-                        x-text="getMaturedDepositsForDate(date).length"
-                      ></span>
-                    </div>
-                  </template>
-                </div>
-              </template>
-            </div>
-          </div>
-
-          <!-- Active Date Filter Alert Banner -->
-          <template x-if="selectedDateFilter">
-            <div
-              class="bg-coralLight rounded-2xl p-2 border-hand flex items-center justify-between text-xs"
-            >
-              <div class="flex items-center space-x-1.5">
-                <span class="text-sm">🔔</span>
-                <div>
-                  <span
-                    class="font-black text-charcoal block text-[11px]"
-                    x-text="'Matures on ' + selectedDateFilter"
-                  ></span>
-                  <span
-                    class="text-[9px] font-bold text-slate-600"
-                    x-text="selectedDateDepositsCount + ' deposit(s) found'"
-                  ></span>
-                </div>
-              </div>
-              <button
-                @click="selectedDateFilter = null"
-                class="bg-white px-2 py-0.5 rounded-xl border-hand text-[10px] font-black hover:bg-slate-100 btn-pop"
-              >
-                Clear
-              </button>
-            </div>
-          </template>
-        </section>
-
-        <!-- Summary Cards Section -->
-        <section class="grid grid-cols-3 gap-2">
-          <!-- Total Principal -->
-          <div
-            class="bg-mizuLight rounded-2xl p-2.5 border-hand shadow-hand flex flex-col justify-between"
-          >
-            <span
-              class="text-[9px] font-black bg-mizu px-1.5 py-0.5 rounded-full border-hand text-charcoal w-max"
-              >💰 Principal</span
-            >
-            <div
-              class="text-xs font-black text-charcoal mt-1 tracking-tight truncate"
-              x-text="formatCurrencyShort(totalPrincipal)"
-            ></div>
-          </div>
-
-          <!-- Total Interest -->
-          <div
-            class="bg-coralLight rounded-2xl p-2.5 border-hand shadow-hand flex flex-col justify-between"
-          >
-            <span
-              class="text-[9px] font-black bg-coral px-1.5 py-0.5 rounded-full border-hand text-charcoal w-max"
-              >🌱 Interest</span
-            >
-            <div
-              class="text-xs font-black text-emerald-800 mt-1 tracking-tight truncate"
-              x-text="formatCurrencyShort(totalInterest)"
-            ></div>
-          </div>
-
-          <!-- Active Count -->
-          <div
-            class="bg-cream rounded-2xl p-2.5 border-hand shadow-hand flex flex-col justify-between"
-          >
-            <span
-              class="text-[9px] font-black bg-yamabuki px-1.5 py-0.5 rounded-full border-hand text-charcoal w-max"
-              >🏦 Active</span
-            >
-            <div
-              class="text-xs font-black text-charcoal mt-1 tracking-tight"
-              x-text="activeDepositsCount + ' / ' + deposits.length"
-            ></div>
-          </div>
-        </section>
-
-        <!-- Filter Tabs & Search Bar -->
-        <section class="space-y-2">
-          <div
-            class="flex items-center space-x-1 overflow-x-auto no-scrollbar pb-0.5"
-          >
-            <button
-              @click="statusFilter = 'all'; selectedDateFilter = null"
-              :class="statusFilter === 'all' && !selectedDateFilter ? 'bg-charcoal text-washi' : 'bg-white text-charcoal hover:bg-slate-100'"
-              class="px-2.5 py-1 rounded-xl border-hand text-[10px] font-black btn-pop whitespace-nowrap"
-            >
-              All (<span x-text="deposits.length"></span>)
-            </button>
-            <button
-              @click="statusFilter = 'active'; selectedDateFilter = null"
-              :class="statusFilter === 'active' ? 'bg-wakatake text-charcoal' : 'bg-white text-charcoal hover:bg-slate-100'"
-              class="px-2.5 py-1 rounded-xl border-hand text-[10px] font-black btn-pop whitespace-nowrap"
-            >
-              🌱 Active (<span x-text="activeDepositsCount"></span>)
-            </button>
-            <button
-              @click="statusFilter = 'matured'; selectedDateFilter = null"
-              :class="statusFilter === 'matured' ? 'bg-yamabuki text-charcoal' : 'bg-white text-charcoal hover:bg-slate-100'"
-              class="px-2.5 py-1 rounded-xl border-hand text-[10px] font-black btn-pop whitespace-nowrap"
-            >
-              🎉 Matured (<span x-text="maturedDepositsCount"></span>)
-            </button>
-          </div>
-
-          <!-- Search Input & Quick Add Row -->
+        <!-- VIEW TOGGLE & FILTER BAR -->
+        <div class="flex items-center justify-between pt-1">
           <div class="flex items-center space-x-2">
-            <div class="relative flex-grow">
-              <input
-                type="text"
-                x-model="searchQuery"
-                placeholder="Search Bank, Account or Note..."
-                class="w-full bg-white pl-7 pr-3 py-1.5 rounded-2xl border-hand text-xs font-bold placeholder-slate-400 focus:outline-none focus:bg-cream"
-              />
-              <span class="absolute left-2.5 top-1.5 text-xs">🔍</span>
-            </div>
-            <!-- <button
-              @click="openAddModal()"
-              class="px-3 py-1.5 bg-yamabuki hover:bg-[#f5c752] rounded-2xl border-hand text-xs font-black text-charcoal btn-pop shadow-hand-sm whitespace-nowrap flex items-center space-x-1"
-            >
-              <span>+ Add</span>
-            </button> -->
-          </div>
-        </section>
-
-        <!-- Toggle View: Mobile Stacked Cards / Compact Table -->
-        <div class="flex justify-between items-center px-1">
-          <span
-            class="text-[10px] font-black text-slate-500 uppercase tracking-wider"
-            >Deposit Records</span
-          >
-          <button
-            @click="viewMode = viewMode === 'cards' ? 'table' : 'cards'"
-            class="text-[10px] font-black text-charcoal bg-white px-2 py-0.5 rounded-lg border-hand btn-pop"
-          >
+            <h3 class="font-bold text-stone-800 text-sm">
+              Your Fixed Deposits
+            </h3>
             <span
-              x-text="viewMode === 'cards' ? '📋 Table View' : '🎴 Card View'"
-            ></span>
+              id="list-badge"
+              class="bg-sage-100 text-sage-700 text-xs px-2 py-0.5 rounded-full font-bold"
+              >0</span
+            >
+          </div>
+
+          <div
+            class="flex items-center bg-paper-dark p-1 rounded-2xl border border-stone-200/60"
+          >
+            <button
+              id="btn-view-cards"
+              onclick="setViewMode('cards')"
+              class="px-2.5 py-1 text-xs rounded-xl font-bold transition-all bg-white text-stone-800 shadow-2xs"
+            >
+              <i
+                data-lucide="layout-grid"
+                class="w-3.5 h-3.5 inline-block mr-1"
+              ></i
+              >Cards
+            </button>
+            <button
+              id="btn-view-table"
+              onclick="setViewMode('table')"
+              class="px-2.5 py-1 text-xs rounded-xl font-medium transition-all text-stone-500 hover:text-stone-800"
+            >
+              <i data-lucide="table" class="w-3.5 h-3.5 inline-block mr-1"></i
+              >Table
+            </button>
+          </div>
+        </div>
+
+        <!-- SELECTED DATE FILTER BANNER -->
+        <div
+          id="filter-banner"
+          class="hidden items-center justify-between bg-coral-100/80 border border-coral-200 text-coral-700 px-3.5 py-2 rounded-2xl text-xs font-medium"
+        >
+          <div class="flex items-center space-x-2">
+            <i data-lucide="filter" class="w-4 h-4"></i>
+            <span
+              >Maturity Filter:
+              <strong id="filter-date-label">Mon 12</strong></span
+            >
+          </div>
+          <button
+            onclick="clearDateFilter()"
+            class="underline text-coral-800 text-xs font-bold hover:text-stone-900"
+          >
+            Show All
           </button>
         </div>
 
-        <!-- View 1: Mobile Stacked Card View -->
-        <template x-if="viewMode === 'cards'">
-          <div class="space-y-3">
-            <template x-for="item in filteredDeposits" :key="item.id">
-              <div
-                class="bg-white rounded-3xl p-3.5 border-hand shadow-hand space-y-2.5 relative"
-              >
-                <!-- Card Header -->
-                <div class="flex justify-between items-start">
-                  <div>
-                    <span
-                      class="text-[10px] font-mono text-slate-400 block"
-                      x-text="item.accountNo"
-                    ></span>
-                    <h3
-                      class="text-sm font-black text-charcoal flex items-center space-x-1 justify-center"
-                    >
-                      <!-- <span>🏦</span> -->
-                      <div class="w-5 h-5 flex items-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="20px"
-                          height="20px"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                        >
-                          <path
-                            d="M3 19H21M12 12V19M18 12V19M6 12V19M12.4472 3.22361L20.59 7.29502C21.4395 7.71974 21.1372 9 20.1875 9H3.81246C2.86276 9 2.56053 7.71974 3.40997 7.29502L11.5528 3.22361C11.8343 3.08284 12.1657 3.08284 12.4472 3.22361Z"
-                            stroke="#000000"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          />
-                        </svg>
-                      </div>
-                      <span x-text="item.bankName"></span>
-                    </h3>
-                  </div>
-                  <template x-if="isMatured(item.endDate)">
-                    <span
-                      class="bg-yamabuki text-charcoal text-[9px] font-black px-2 py-0.5 rounded-full border-hand"
-                    >
-                      🎉 Matured
-                    </span>
-                  </template>
-                  <template x-if="!isMatured(item.endDate)">
-                    <span
-                      class="bg-wakatake text-charcoal text-[9px] font-black px-2 py-0.5 rounded-full border-hand"
-                    >
-                      🌱 Active
-                    </span>
-                  </template>
-                </div>
-
-                <!-- Notes Tag -->
-                <template x-if="item.notes">
-                  <div
-                    class="bg-cream rounded-xl p-1.5 border-hand text-[10px] font-bold text-slate-700 flex items-center space-x-1"
-                  >
-                    <span>📝</span>
-                    <span x-text="item.notes"></span>
-                  </div>
-                </template>
-
-                <!-- Key Numbers Grid -->
-                <div
-                  class="bg-washi rounded-2xl p-2.5 border-hand grid grid-cols-2 gap-2 text-xs"
-                >
-                  <div>
-                    <span class="text-slate-400 font-bold block text-[9px]"
-                      >Principal Amount</span
-                    >
-                    <span
-                      class="font-black text-charcoal text-xs"
-                      x-text="formatCurrency(item.principal)"
-                    ></span>
-                  </div>
-                  <div>
-                    <span class="text-slate-400 font-bold block text-[9px]"
-                      >Calculated Interest</span
-                    >
-                    <span
-                      class="font-black text-emerald-800 text-xs"
-                      x-text="formatCurrency(calcInterest(item.principal, item.interestRate, item.months))"
-                    ></span>
-                  </div>
-                  <div class="pt-1 border-t border-slate-200">
-                    <span class="text-slate-400 font-bold block text-[9px]"
-                      >Rate / Tenor</span
-                    >
-                    <span
-                      class="font-black text-charcoal text-[11px]"
-                      x-text="item.interestRate.toFixed(2) + '% / ' + item.months + ' Mo'"
-                    ></span>
-                  </div>
-                  <div class="pt-1 border-t border-slate-200">
-                    <span class="text-slate-400 font-bold block text-[9px]"
-                      >Dates (Start ~ End)</span
-                    >
-                    <span
-                      class="font-black text-charcoal text-[10px]"
-                      x-text="item.startDate + ' ~ ' + item.endDate"
-                    ></span>
-                  </div>
-                </div>
-
-                <!-- Bottom Action Row -->
-                <div class="flex justify-end space-x-1.5 pt-0.5">
-                  <button
-                    @click="editDeposit(item)"
-                    class="bg-mizu px-2.5 py-1 rounded-xl border-hand font-black btn-pop text-charcoal text-[10px] flex items-center space-x-1"
-                  >
-                    <span>✏️ Edit</span>
-                  </button>
-                  <button
-                    @click="deleteDeposit(item.id)"
-                    class="bg-coral px-2.5 py-1 rounded-xl border-hand font-black btn-pop text-charcoal text-[10px] flex items-center space-x-1"
-                  >
-                    <span>🗑️ Delete</span>
-                  </button>
-                </div>
-              </div>
-            </template>
-          </div>
-        </template>
-
-        <!-- View 2: Compact Scrollable Table View -->
-        <template x-if="viewMode === 'table'">
-          <div
-            class="bg-white rounded-3xl border-hand shadow-hand overflow-hidden"
-          >
-            <div class="overflow-x-auto no-scrollbar">
-              <table class="w-full text-left border-collapse min-w-[550px]">
-                <thead>
-                  <tr
-                    class="bg-cream border-b-hand text-charcoal font-black text-[10px]"
-                  >
-                    <th class="p-2.5">Bank & Note</th>
-                    <th class="p-2.5">Account No.</th>
-                    <th class="p-2.5 text-right">Principal</th>
-                    <th class="p-2.5">Start ~ End Date</th>
-                    <th class="p-2.5 text-center">Rate</th>
-                    <th class="p-2.5 text-center">Tenor</th>
-                    <th class="p-2.5 text-right">Interest ($)</th>
-                    <th class="p-2.5 text-center">Action</th>
-                  </tr>
-                </thead>
-                <tbody
-                  class="divide-y-2 divide-charcoal/10 font-bold text-[11px]"
-                >
-                  <template x-for="item in filteredDeposits" :key="item.id">
-                    <tr class="hover:bg-washi/80">
-                      <td class="p-2.5">
-                        <span
-                          class="font-black text-charcoal block"
-                          x-text="item.bankName"
-                        ></span>
-                        <span
-                          class="text-[9px] text-slate-400 block"
-                          x-text="item.notes || 'No notes'"
-                        ></span>
-                      </td>
-                      <td
-                        class="p-2.5 font-mono text-slate-600 text-[10px]"
-                        x-text="item.accountNo"
-                      ></td>
-                      <td
-                        class="p-2.5 text-right font-black"
-                        x-text="formatCurrency(item.principal)"
-                      ></td>
-                      <td
-                        class="p-2.5 text-[9px] text-slate-600"
-                        x-text="item.startDate + ' ~ ' + item.endDate"
-                      ></td>
-                      <td class="p-2.5 text-center">
-                        <span
-                          class="bg-coralLight px-1.5 py-0.5 rounded-full border-hand text-[9px] font-black"
-                          x-text="item.interestRate.toFixed(2) + '%'"
-                        ></span>
-                      </td>
-                      <td
-                        class="p-2.5 text-center text-[10px]"
-                        x-text="item.months + 'M'"
-                      ></td>
-                      <td
-                        class="p-2.5 text-right font-black text-emerald-800"
-                        x-text="formatCurrency(calcInterest(item.principal, item.interestRate, item.months))"
-                      ></td>
-                      <td class="p-2.5 text-center space-x-1">
-                        <button
-                          @click="editDeposit(item)"
-                          class="p-1 rounded bg-mizu border-hand text-[10px]"
-                        >
-                          ✏️
-                        </button>
-                        <button
-                          @click="deleteDeposit(item.id)"
-                          class="p-1 rounded bg-coral border-hand text-[10px]"
-                        >
-                          🗑️
-                        </button>
-                      </td>
-                    </tr>
-                  </template>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </template>
-
-        <!-- Empty State -->
-        <template x-if="filteredDeposits.length === 0">
-          <div
-            class="bg-white rounded-3xl p-6 border-hand shadow-hand text-center space-y-2"
-          >
-            <div class="text-3xl">🌱🎈</div>
-            <p class="font-black text-xs text-charcoal">
-              No deposit records found!
-            </p>
-            <p class="text-[10px] text-slate-400">
-              Tap '+ New Deposit' at the top to add one.
-            </p>
-          </div>
-        </template>
-
-        <!-- Footer Info -->
-        <div class="pt-2 pb-1 text-center border-t border-slate-200">
-          <div
-            class="text-[10px] font-black text-slate-400 flex items-center justify-center space-x-2"
-          >
-            <span>🐾 Savings App</span>
-            <span>•</span>
-            <button
-              @click="resetSampleData()"
-              class="underline hover:text-charcoal"
-            >
-              Reset Demo
-            </button>
-          </div>
+        <!-- DEPOSITS CONTAINER -->
+        <div id="deposits-container">
+          <!-- Cards or Table HTML generated here -->
         </div>
       </main>
 
-      <!-- Modal Form (Add / Edit Deposit) -->
+      <!-- MODAL FORM: ADD / EDIT FIXED DEPOSIT -->
       <div
-        x-show="isModalOpen"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 scale-95"
-        x-transition:enter-end="opacity-100 scale-100"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100 scale-100"
-        x-transition:leave-end="opacity-0 scale-95"
-        class="fixed inset-0 z-50 overflow-y-auto bg-charcoal/40 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4"
-        x-cloak
+        id="modal"
+        class="fixed inset-0 bg-stone-900/40 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 opacity-0 pointer-events-none transition-opacity duration-200"
       >
         <div
-          class="bg-washi rounded-t-[32px] sm:rounded-3xl max-w-[480px] w-full p-4 sm:p-5 border-t-hand sm:border-hand shadow-hand-lg relative space-y-3 max-h-[90vh] overflow-y-auto no-scrollbar"
-          @click.away="isModalOpen = false"
+          class="bg-[#FFFCF6] w-full max-w-[430px] rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl max-h-[90vh] overflow-y-auto transform translate-y-10 transition-transform duration-200 no-scrollbar border border-stone-200/80"
         >
-          <!-- Modal Header -->
-          <div class="flex justify-between items-center pb-2 border-b-hand">
-            <h3
-              class="text-sm sm:text-base font-black text-charcoal flex items-center space-x-1.5"
-            >
-              <span
-                x-text="isEditing ? '✏️ Edit Deposit Record' : '✨ Add New Fixed Deposit'"
-              ></span>
-            </h3>
+          <div class="flex justify-between items-center mb-3">
+            <div>
+              <h3 class="text-base font-bold text-stone-800" id="modal-title">
+                New Fixed Deposit
+              </h3>
+              <p class="text-xs text-stone-400">
+                Calculate & track your deposit details
+              </p>
+            </div>
             <button
-              @click="isModalOpen = false"
-              class="bg-white p-1 rounded-xl border-hand hover:bg-slate-100 text-charcoal font-black text-xs btn-pop"
+              onclick="closeModal()"
+              class="w-8 h-8 rounded-full bg-stone-100 text-stone-500 flex items-center justify-center hover:bg-stone-200"
             >
-              ✕
+              <i data-lucide="x" class="w-4 h-4"></i>
             </button>
           </div>
 
-          <!-- Form Fields -->
-          <form @submit.prevent="saveDeposit()" class="space-y-3">
+          <form
+            id="fd-form"
+            onsubmit="handleFormSubmit(event)"
+            class="space-y-3.5 text-xs"
+          >
+            <input type="hidden" id="entry-id" />
+
+            <!-- Bank Name -->
             <div>
-              <label class="block text-[11px] font-black text-charcoal mb-0.5"
-                >🏦 Bank Name</label
+              <label class="block font-bold text-stone-700 mb-1"
+                >Bank Name *</label
               >
               <input
                 type="text"
-                x-model="form.bankName"
+                id="bank-name"
                 required
-                placeholder="e.g. HSBC / Standard Chartered / DBS"
-                class="w-full bg-white px-3 py-1.5 rounded-2xl border-hand text-xs font-bold text-charcoal focus:outline-none focus:bg-cream"
+                placeholder="e.g. HSBC, Standard Chartered"
+                class="w-full px-3.5 py-2.5 rounded-2xl bg-paper-card border border-stone-200 text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-sage-500"
               />
             </div>
 
+            <!-- Remarks / Notes -->
             <div>
-              <label class="block text-[11px] font-black text-charcoal mb-0.5"
-                >💳 Account No.</label
+              <label class="block font-bold text-stone-700 mb-1"
+                >Remarks / Note (Optional)</label
               >
               <input
                 type="text"
-                x-model="form.accountNo"
+                id="remarks"
+                placeholder="e.g. Wealth Mgmt Special Rate"
+                class="w-full px-3.5 py-2.5 rounded-2xl bg-paper-card border border-stone-200 text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-sage-500"
+              />
+            </div>
+
+            <!-- Account Number -->
+            <div>
+              <label class="block font-bold text-stone-700 mb-1"
+                >Account No. *</label
+              >
+              <input
+                type="text"
+                id="account-no"
                 required
                 placeholder="e.g. 123-456789-001"
-                class="w-full bg-white px-3 py-1.5 rounded-2xl border-hand text-xs font-mono font-bold text-charcoal focus:outline-none focus:bg-cream"
+                class="w-full px-3.5 py-2.5 rounded-2xl bg-paper-card border border-stone-200 text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-sage-500"
               />
             </div>
 
-            <div>
-              <label class="block text-[11px] font-black text-charcoal mb-0.5"
-                >📝 Notes / Remarks</label
-              >
-              <input
-                type="text"
-                x-model="form.notes"
-                placeholder="e.g. Promotional rate, Branch counter"
-                class="w-full bg-white px-3 py-1.5 rounded-2xl border-hand text-xs font-bold text-charcoal focus:outline-none focus:bg-cream"
-              />
-            </div>
-
-            <div class="grid grid-cols-2 gap-2.5">
+            <!-- Principal Amount & Rate Row -->
+            <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-[11px] font-black text-charcoal mb-0.5"
-                  >💰 Principal ($)</label
+                <label class="block font-bold text-stone-700 mb-1"
+                  >Principal ($) *</label
                 >
                 <input
                   type="number"
-                  step="0.01"
-                  min="0"
-                  x-model.number="form.principal"
+                  id="principal"
                   required
-                  placeholder="100000"
-                  class="w-full bg-white px-3 py-1.5 rounded-2xl border-hand text-xs font-bold text-charcoal focus:outline-none focus:bg-cream"
+                  min="1"
+                  step="any"
+                  placeholder="50000"
+                  oninput="recalculateInterest()"
+                  class="w-full px-3.5 py-2.5 rounded-2xl bg-paper-card border border-stone-200 text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-sage-500"
                 />
               </div>
               <div>
-                <label class="block text-[11px] font-black text-charcoal mb-0.5"
-                  >📈 Annual Rate (%)</label
+                <label class="block font-bold text-stone-700 mb-1"
+                  >Annual Rate (%) *</label
                 >
                 <input
                   type="number"
-                  step="0.01"
-                  min="0"
-                  x-model.number="form.interestRate"
+                  id="annual-rate"
                   required
-                  placeholder="3.80"
-                  class="w-full bg-white px-3 py-1.5 rounded-2xl border-hand text-xs font-bold text-charcoal focus:outline-none focus:bg-cream"
+                  min="0.01"
+                  step="0.01"
+                  placeholder="4.25"
+                  oninput="recalculateInterest()"
+                  class="w-full px-3.5 py-2.5 rounded-2xl bg-paper-card border border-stone-200 text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-sage-500"
                 />
               </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-2.5">
+            <!-- Term in Months & Start Date -->
+            <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-[11px] font-black text-charcoal mb-0.5"
-                  >⏳ Tenor (Months)</label
+                <label class="block font-bold text-stone-700 mb-1"
+                  >Duration (Months) *</label
                 >
-                <select
-                  x-model.number="form.months"
-                  @change="updateEndDate()"
-                  class="w-full bg-white px-3 py-1.5 rounded-2xl border-hand text-xs font-bold text-charcoal focus:outline-none focus:bg-cream"
-                >
-                  <option value="1">1 Month</option>
-                  <option value="3">3 Months</option>
-                  <option value="6">6 Months</option>
-                  <option value="12">12 Months (1 Yr)</option>
-                  <option value="24">24 Months (2 Yrs)</option>
-                  <option value="36">36 Months (3 Yrs)</option>
-                </select>
+                <input
+                  type="number"
+                  id="months"
+                  required
+                  min="1"
+                  max="120"
+                  value="6"
+                  oninput="
+                    recalculateInterest();
+                    updateEndDate();
+                  "
+                  class="w-full px-3.5 py-2.5 rounded-2xl bg-paper-card border border-stone-200 text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-sage-500"
+                />
               </div>
               <div>
-                <label class="block text-[11px] font-black text-charcoal mb-0.5"
-                  >📅 Start Date</label
+                <label class="block font-bold text-stone-700 mb-1"
+                  >Start Date *</label
                 >
                 <input
                   type="date"
-                  x-model="form.startDate"
-                  @change="updateEndDate()"
+                  id="start-date"
                   required
-                  class="w-full bg-white px-3 py-1.5 rounded-2xl border-hand text-xs font-bold text-charcoal focus:outline-none focus:bg-cream"
+                  onchange="updateEndDate()"
+                  class="w-full px-3.5 py-2.5 rounded-2xl bg-paper-card border border-stone-200 text-sm text-stone-800 focus:outline-none focus:ring-2 focus:ring-sage-500"
                 />
               </div>
             </div>
 
+            <!-- Calculated End Date Display -->
             <div>
-              <label class="block text-[11px] font-black text-charcoal mb-0.5"
-                >🏁 Maturity Date (Auto)</label
+              <label class="block font-bold text-stone-700 mb-1"
+                >Maturity Date (Calculated)</label
               >
               <input
                 type="date"
-                x-model="form.endDate"
+                id="end-date"
                 required
-                class="w-full bg-cream px-3 py-1.5 rounded-2xl border-hand text-xs font-bold text-charcoal focus:outline-none"
+                class="w-full px-3.5 py-2.5 rounded-2xl bg-stone-100 border border-stone-200 text-sm text-stone-700 focus:outline-none"
               />
             </div>
 
-            <!-- Formula Calculated Interest Box -->
+            <!-- AUTOMATIC CALCULATION PREVIEW BOX -->
             <div
-              class="bg-coralLight rounded-2xl p-2.5 border-hand flex justify-between items-center"
+              class="bg-sage-50 border border-sage-200 rounded-2xl p-3.5 mt-2"
             >
-              <div>
-                <span class="text-xs font-black text-charcoal block"
-                  >🧮 Expected Interest</span
-                >
-                <span class="text-[9px] text-slate-500 font-bold"
-                  >Principal × Rate% × (Months / 12)</span
+              <div
+                class="text-[11px] text-sage-700 font-bold mb-1 flex items-center justify-between"
+              >
+                <span>Auto-Calculated Interest</span>
+                <span class="text-[10px] font-normal text-stone-500"
+                  >P × Rate% × (M/12)</span
                 >
               </div>
-              <span
-                class="text-sm font-black text-emerald-800"
-                x-text="formatCurrency(calcInterest(form.principal, form.interestRate, form.months))"
-              ></span>
+              <div class="flex justify-between items-baseline">
+                <span
+                  class="text-xl font-extrabold text-sage-700"
+                  id="calc-interest-display"
+                  >$0.00</span
+                >
+                <span class="text-xs text-stone-500 font-medium"
+                  >Total:
+                  <strong id="calc-total-display" class="text-stone-800"
+                    >$0.00</strong
+                  ></span
+                >
+              </div>
             </div>
 
-            <!-- Modal Actions -->
-            <div class="flex justify-end space-x-2 pt-2 border-t-hand">
+            <!-- Actions -->
+            <div class="flex space-x-3 pt-2">
               <button
                 type="button"
-                @click="isModalOpen = false"
-                class="px-3.5 py-1.5 bg-white rounded-2xl border-hand text-xs font-black text-charcoal hover:bg-slate-100 btn-pop"
+                onclick="closeModal()"
+                class="w-1/2 py-3 rounded-2xl border border-stone-200 font-bold text-stone-600 hover:bg-stone-100 text-sm"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                class="px-4 py-1.5 bg-yamabuki rounded-2xl border-hand text-xs font-black text-charcoal hover:bg-[#f5c752] btn-pop shadow-hand-sm"
+                class="w-1/2 py-3 rounded-2xl bg-coral-500 hover:bg-coral-600 text-white font-bold shadow-md shadow-coral-500/20 text-sm"
               >
-                Save Record ✨
+                Save Deposit
               </button>
             </div>
           </form>
@@ -855,317 +569,706 @@
       </div>
     </div>
 
-    <!-- Application Controller Logic -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-      function depositApp() {
-        return {
-          deposits: [],
-          searchQuery: "",
-          statusFilter: "all", // 'all', 'active', 'matured'
-          selectedDateFilter: null, // YYYY-MM-DD
-          viewMode: "cards", // 'cards' or 'table'
-          currentCalendarDate: new Date(),
-          isModalOpen: false,
-          isEditing: false,
-          currentId: null,
-          form: {
-            bankName: "",
-            accountNo: "",
-            notes: "",
+      // DATA STORAGE STATE
+      let deposits =
+        JSON.parse(localStorage.getItem("fd_tracker_items_v2")) || [];
+      let userName =
+        localStorage.getItem("fd_tracker_user_name") || "Jose Maria";
+      let viewMode = "cards";
+      let selectedFilterDate = null;
+      let calendarDays = [];
+
+      // TODAY DATE FORMATTER
+      const getTodayStr = () => new Date().toISOString().split("T")[0];
+
+      // AUTO DETERMINE ACTIVE VS MATURED STATUS
+      function getItemStatus(endDateStr) {
+        const today = getTodayStr();
+        return endDateStr >= today ? "Active" : "Matured";
+      }
+
+      // SAMPLE INITIAL DATA IF EMPTY
+      if (deposits.length === 0) {
+        const today = new Date();
+        const formatDateStr = (d) => d.toISOString().split("T")[0];
+
+        const d2 = new Date();
+        d2.setMonth(d2.getMonth() + 6);
+
+        const d1 = new Date();
+        d1.setDate(today.getDate() + 3);
+        const start1 = new Date(d1);
+        start1.setMonth(start1.getMonth() - 6);
+
+        const d3 = new Date();
+        d3.setDate(today.getDate() - 10);
+        const start3 = new Date(d3);
+        start3.setMonth(start3.getMonth() - 12);
+
+        deposits = [
+          {
+            id: "fd-2",
+            bankName: "Standard Chartered",
+            remarks: "Online Special Deposit",
+            accountNo: "411-092182-102",
+            principal: 150000,
+            annualRate: 4.1,
+            months: 6,
+            startDate: formatDateStr(today),
+            endDate: formatDateStr(d2),
+            interest: calculateInterest(150000, 4.1, 6),
+            createdAt: Date.now(),
+          },
+          {
+            id: "fd-1",
+            bankName: "HSBC Hong Kong",
+            remarks: "Premier Savings Promo",
+            accountNo: "582-128492-838",
             principal: 100000,
-            startDate: new Date().toISOString().split("T")[0],
-            endDate: "",
-            interestRate: 3.8,
+            annualRate: 4.35,
+            months: 6,
+            startDate: formatDateStr(start1),
+            endDate: formatDateStr(d1),
+            interest: calculateInterest(100000, 4.35, 6),
+            createdAt: Date.now() - 100000,
+          },
+          {
+            id: "fd-3",
+            bankName: "Bank of China",
+            remarks: "Completed Time Deposit",
+            accountNo: "012-882019-992",
+            principal: 80000,
+            annualRate: 3.9,
             months: 12,
+            startDate: formatDateStr(start3),
+            endDate: formatDateStr(d3),
+            interest: calculateInterest(80000, 3.9, 12),
+            createdAt: Date.now() - 200000,
           },
+        ];
+        saveDeposits();
+      }
 
-          init() {
-            const saved = localStorage.getItem("savings_mobile_deposits_data");
-            if (saved) {
-              try {
-                this.deposits = JSON.parse(saved);
-              } catch (e) {
-                this.deposits = this.getSampleData();
-              }
-            } else {
-              this.deposits = this.getSampleData();
-              this.saveToStorage();
-            }
-            this.updateEndDate();
-          },
+      window.onload = function () {
+        lucide.createIcons();
+        renderProfileName();
+        initSwipableCalendar();
+        renderDashboard();
+        setTodayAsDefaultFormDate();
+      };
 
-          getSampleData() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, "0");
+      function saveDeposits() {
+        localStorage.setItem("fd_tracker_items_v2", JSON.stringify(deposits));
+      }
 
-            return [
-              {
-                id: "1",
-                bankName: "HSBC Bank",
-                accountNo: "848-123456-838",
-                notes: "12-Month Online Promo",
-                principal: 200000,
-                startDate: `${year - 1}-${month}-15`,
-                endDate: `${year}-${month}-15`,
-                interestRate: 3.85,
-                months: 12,
-              },
-            ];
-          },
+      // PROFILE NAME LOGIC
+      function renderProfileName() {
+        document.getElementById("user-name-text").innerText = userName;
 
-          saveToStorage() {
-            localStorage.setItem(
-              "savings_mobile_deposits_data",
-              JSON.stringify(this.deposits),
-            );
-          },
+        // Calculate initials for avatar icon
+        const initials = userName
+          .trim()
+          .split(" ")
+          .filter(Boolean)
+          .map((n) => n[0].toUpperCase())
+          .slice(0, 2)
+          .join("");
+        document.getElementById("user-avatar").innerText = initials || "FD";
+      }
 
-          resetSampleData() {
-            if (confirm("Reset to demo sample deposit data? 🐾")) {
-              this.deposits = this.getSampleData();
-              this.saveToStorage();
-            }
-          },
+      function toggleEditProfileName() {
+        const displayEl = document.getElementById("profile-name-display");
+        const editEl = document.getElementById("profile-name-edit");
+        const inputEl = document.getElementById("user-name-input");
 
-          exportData() {
-            const dataStr =
-              "data:text/json;charset=utf-8," +
-              encodeURIComponent(JSON.stringify(this.deposits, null, 2));
-            const downloadAnchor = document.createElement("a");
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute(
-              "download",
-              `savings_deposits_${new Date().toISOString().split("T")[0]}.json`,
-            );
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-          },
+        if (editEl.classList.contains("hidden")) {
+          inputEl.value = userName;
+          displayEl.classList.add("hidden");
+          editEl.classList.remove("hidden");
+          editEl.classList.add("flex");
+          inputEl.focus();
+        }
+      }
 
-          isMatured(endDateStr) {
-            if (!endDateStr) return false;
-            const today = new Date().toISOString().split("T")[0];
-            return endDateStr < today;
-          },
+      function saveProfileName(e) {
+        if (e) e.stopPropagation();
+        const inputEl = document.getElementById("user-name-input");
+        const newName = inputEl.value.trim();
 
-          // Calendar helper functions
-          get calendarMonthLabel() {
-            return this.currentCalendarDate.toLocaleString("default", {
-              month: "short",
+        if (newName) {
+          userName = newName;
+          localStorage.setItem("fd_tracker_user_name", userName);
+          renderProfileName();
+        }
+        cancelEditProfileName(e);
+      }
+
+      function cancelEditProfileName(e) {
+        if (e) e.stopPropagation();
+        const displayEl = document.getElementById("profile-name-display");
+        const editEl = document.getElementById("profile-name-edit");
+
+        editEl.classList.add("hidden");
+        editEl.classList.remove("flex");
+        displayEl.classList.remove("hidden");
+      }
+
+      // SORT DEPOSITS DESCENDING (Newest to Oldest) by Start Date or Timestamp
+      function getSortedDeposits() {
+        return [...deposits].sort((a, b) => {
+          if (b.startDate !== a.startDate) {
+            return b.startDate.localeCompare(a.startDate);
+          }
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+      }
+
+      // FORMULA: Interest = Principal * (Annual Rate / 100) * (Months / 12)
+      function calculateInterest(principal, rate, months) {
+        if (!principal || !rate || !months) return 0;
+        const p = parseFloat(principal);
+        const r = parseFloat(rate) / 100;
+        const m = parseFloat(months) / 12;
+        return Math.round(p * r * m * 100) / 100;
+      }
+
+      function recalculateInterest() {
+        const p = document.getElementById("principal").value;
+        const r = document.getElementById("annual-rate").value;
+        const m = document.getElementById("months").value;
+
+        const interest = calculateInterest(p, r, m);
+        const total = (parseFloat(p) || 0) + interest;
+
+        document.getElementById("calc-interest-display").innerText =
+          "$" +
+          interest.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+        document.getElementById("calc-total-display").innerText =
+          "$" +
+          total.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+      }
+
+      function updateEndDate() {
+        const startDateVal = document.getElementById("start-date").value;
+        const monthsVal =
+          parseInt(document.getElementById("months").value) || 0;
+
+        if (startDateVal) {
+          const sDate = new Date(startDateVal);
+          sDate.setMonth(sDate.getMonth() + monthsVal);
+          document.getElementById("end-date").value = sDate
+            .toISOString()
+            .split("T")[0];
+        }
+      }
+
+      function setTodayAsDefaultFormDate() {
+        const today = getTodayStr();
+        document.getElementById("start-date").value = today;
+        updateEndDate();
+      }
+
+      // MULTI-WEEK HORIZONTALLY SWIPABLE CALENDAR STRIP
+      function initSwipableCalendar() {
+        const calendarEl = document.getElementById("weekly-calendar");
+        calendarEl.innerHTML = "";
+
+        const today = new Date();
+        const startDate = new Date(today);
+        startDate.setDate(today.getDate() - 14);
+
+        calendarDays = [];
+
+        for (let i = 0; i < 42; i++) {
+          const day = new Date(startDate);
+          day.setDate(startDate.getDate() + i);
+          const dateStr = day.toISOString().split("T")[0];
+
+          calendarDays.push({
+            dateStr: dateStr,
+            dayName: day.toLocaleDateString("en-US", { weekday: "short" }),
+            dayNum: day.getDate(),
+            monthYear: day.toLocaleDateString("en-US", {
+              month: "long",
               year: "numeric",
+            }),
+            isToday: getTodayStr() === dateStr,
+          });
+        }
+
+        renderSwipableCalendar();
+        setTimeout(scrollToToday, 50);
+
+        calendarEl.addEventListener("scroll", updateMonthHeaderOnScroll);
+      }
+
+      function renderSwipableCalendar() {
+        const calendarEl = document.getElementById("weekly-calendar");
+        calendarEl.innerHTML = "";
+
+        const maturityDates = deposits.map((d) => d.endDate);
+
+        calendarDays.forEach((day) => {
+          const hasMaturity = maturityDates.includes(day.dateStr);
+          const isSelected = selectedFilterDate === day.dateStr;
+
+          let btnClass =
+            "flex-shrink-0 flex flex-col items-center justify-center py-2 px-2.5 rounded-2xl transition-all cursor-pointer min-w-[48px] snap-center relative border ";
+
+          if (isSelected) {
+            btnClass +=
+              "bg-coral-500 text-white border-coral-600 shadow-md shadow-coral-500/30 font-bold scale-105";
+          } else if (day.isToday) {
+            btnClass += "bg-coral-400 text-white border-coral-500 font-bold";
+          } else {
+            btnClass +=
+              "bg-white hover:bg-stone-50 text-stone-700 border-stone-200/60 shadow-2xs";
+          }
+
+          const dayDot = hasMaturity
+            ? `<span class="absolute top-1 right-1 w-2 h-2 rounded-full ${isSelected ? "bg-white" : "bg-coral-500"}"></span>`
+            : "";
+
+          calendarEl.innerHTML += `
+                    <button id="cal-day-${day.dateStr}" onclick="toggleDateFilter('${day.dateStr}')" class="${btnClass}">
+                        ${dayDot}
+                        <span class="text-[10px] ${isSelected || day.isToday ? "text-white/80" : "text-stone-400"} uppercase font-semibold leading-none">${day.dayName}</span>
+                        <span class="text-xs font-extrabold mt-1 leading-none">${day.dayNum}</span>
+                    </button>
+                `;
+        });
+      }
+
+      function updateMonthHeaderOnScroll() {
+        const calendarEl = document.getElementById("weekly-calendar");
+        const buttons = calendarEl.querySelectorAll("button");
+        const containerRect = calendarEl.getBoundingClientRect();
+
+        let closestBtn = null;
+        let minDistance = Infinity;
+
+        buttons.forEach((btn) => {
+          const btnRect = btn.getBoundingClientRect();
+          const btnCenter = btnRect.left + btnRect.width / 2;
+          const containerCenter = containerRect.left + containerRect.width / 2;
+          const distance = Math.abs(btnCenter - containerCenter);
+
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestBtn = btn;
+          }
+        });
+
+        if (closestBtn) {
+          const dateStr = closestBtn.id.replace("cal-day-", "");
+          const dayObj = calendarDays.find((d) => d.dateStr === dateStr);
+          if (dayObj) {
+            document.getElementById("calendar-month-label").innerText =
+              dayObj.monthYear;
+          }
+        }
+      }
+
+      function scrollCalendarWeek(direction) {
+        const calendarEl = document.getElementById("weekly-calendar");
+        const scrollAmount = direction === "left" ? -220 : 220;
+        calendarEl.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      }
+
+      function scrollToToday() {
+        const todayStr = getTodayStr();
+        const todayEl = document.getElementById(`cal-day-${todayStr}`);
+        if (todayEl) {
+          todayEl.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "center",
+          });
+        }
+      }
+
+      function toggleDateFilter(dateStr) {
+        if (selectedFilterDate === dateStr) {
+          selectedFilterDate = null;
+          document.getElementById("filter-banner").classList.add("hidden");
+        } else {
+          selectedFilterDate = dateStr;
+          const d = new Date(dateStr);
+          document.getElementById("filter-date-label").innerText =
+            d.toLocaleDateString("en-US", {
+              weekday: "short",
+              month: "short",
+              day: "numeric",
             });
-          },
+          document.getElementById("filter-banner").classList.remove("hidden");
+          document.getElementById("filter-banner").classList.add("flex");
+        }
+        renderSwipableCalendar();
+        renderDashboard();
+      }
 
-          get calendarBlanks() {
-            const year = this.currentCalendarDate.getFullYear();
-            const month = this.currentCalendarDate.getMonth();
-            const firstDay = new Date(year, month, 1).getDay();
-            return Array.from({ length: firstDay }, (_, i) => i);
-          },
+      function clearDateFilter() {
+        selectedFilterDate = null;
+        document.getElementById("filter-banner").classList.add("hidden");
+        renderSwipableCalendar();
+        renderDashboard();
+      }
 
-          get calendarDays() {
-            const year = this.currentCalendarDate.getFullYear();
-            const month = this.currentCalendarDate.getMonth();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            return Array.from({ length: daysInMonth }, (_, i) => i + 1);
-          },
+      function setViewMode(mode) {
+        viewMode = mode;
+        const btnCards = document.getElementById("btn-view-cards");
+        const btnTable = document.getElementById("btn-view-table");
 
-          prevMonth() {
-            this.currentCalendarDate = new Date(
-              this.currentCalendarDate.getFullYear(),
-              this.currentCalendarDate.getMonth() - 1,
-              1,
-            );
-          },
+        if (mode === "cards") {
+          btnCards.className =
+            "px-2.5 py-1 text-xs rounded-xl font-bold transition-all bg-white text-stone-800 shadow-2xs";
+          btnTable.className =
+            "px-2.5 py-1 text-xs rounded-xl font-medium transition-all text-stone-500 hover:text-stone-800";
+        } else {
+          btnTable.className =
+            "px-2.5 py-1 text-xs rounded-xl font-bold transition-all bg-white text-stone-800 shadow-2xs";
+          btnCards.className =
+            "px-2.5 py-1 text-xs rounded-xl font-medium transition-all text-stone-500 hover:text-stone-800";
+        }
+        renderDashboard();
+      }
 
-          nextMonth() {
-            this.currentCalendarDate = new Date(
-              this.currentCalendarDate.getFullYear(),
-              this.currentCalendarDate.getMonth() + 1,
-              1,
-            );
-          },
+      // RENDER DASHBOARD & CALCULATE STATS
+      function renderDashboard() {
+        let totalActiveP = 0;
+        let totalActiveInterest = 0;
+        let activeCount = 0;
 
-          getFormattedCalendarDate(day) {
-            const year = this.currentCalendarDate.getFullYear();
-            const month = String(
-              this.currentCalendarDate.getMonth() + 1,
-            ).padStart(2, "0");
-            const dateStr = String(day).padStart(2, "0");
-            return `${year}-${month}-${dateStr}`;
-          },
+        const now = new Date();
+        const currentMonth = now.getMonth();
+        const currentYear = now.getFullYear();
+        let dueMonthCount = 0;
 
-          getMaturedDepositsForDate(day) {
-            const targetDateStr = this.getFormattedCalendarDate(day);
-            return this.deposits.filter((d) => d.endDate === targetDateStr);
-          },
+        deposits.forEach((d) => {
+          const status = getItemStatus(d.endDate);
 
-          isSelectedDate(day) {
-            return (
-              this.selectedDateFilter === this.getFormattedCalendarDate(day)
-            );
-          },
+          if (status === "Active") {
+            totalActiveP += parseFloat(d.principal);
+            totalActiveInterest += parseFloat(d.interest);
+            activeCount++;
+          }
 
-          isToday(day) {
-            const today = new Date();
-            return (
-              today.getFullYear() === this.currentCalendarDate.getFullYear() &&
-              today.getMonth() === this.currentCalendarDate.getMonth() &&
-              today.getDate() === day
-            );
-          },
+          const endD = new Date(d.endDate);
+          if (
+            endD.getMonth() === currentMonth &&
+            endD.getFullYear() === currentYear
+          ) {
+            dueMonthCount++;
+          }
+        });
 
-          selectCalendarDate(day) {
-            const dateStr = this.getFormattedCalendarDate(day);
-            if (this.selectedDateFilter === dateStr) {
-              this.selectedDateFilter = null;
-            } else {
-              this.selectedDateFilter = dateStr;
-            }
-          },
+        document.getElementById("total-active-investment").innerText =
+          "$" +
+          totalActiveP.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+        document.getElementById("total-interest").innerText =
+          "+$" +
+          totalActiveInterest.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          });
+        document.getElementById("active-count").innerText =
+          `${activeCount} Deposits`;
+        document.getElementById("due-month-count").innerText =
+          `${dueMonthCount} Maturing`;
 
-          get selectedDateDepositsCount() {
-            if (!this.selectedDateFilter) return 0;
-            return this.deposits.filter(
-              (d) => d.endDate === this.selectedDateFilter,
-            ).length;
-          },
+        let sortedDeposits = getSortedDeposits();
 
-          // Filters
-          get filteredDeposits() {
-            return this.deposits.filter((d) => {
-              if (this.selectedDateFilter) {
-                return d.endDate === this.selectedDateFilter;
-              }
+        if (selectedFilterDate) {
+          sortedDeposits = sortedDeposits.filter(
+            (d) => d.endDate === selectedFilterDate,
+          );
+        }
 
-              const q = this.searchQuery.toLowerCase();
-              const matchesSearch =
-                d.bankName.toLowerCase().includes(q) ||
-                d.accountNo.toLowerCase().includes(q) ||
-                (d.notes && d.notes.toLowerCase().includes(q));
+        document.getElementById("list-badge").innerText = sortedDeposits.length;
 
-              const matured = this.isMatured(d.endDate);
-              let matchesStatus = true;
-              if (this.statusFilter === "active") matchesStatus = !matured;
-              if (this.statusFilter === "matured") matchesStatus = matured;
+        const container = document.getElementById("deposits-container");
 
-              return matchesSearch && matchesStatus;
-            });
-          },
+        if (sortedDeposits.length === 0) {
+          container.innerHTML = `
+                    <div class="text-center py-10 bg-white/50 rounded-3xl border border-dashed border-stone-300 p-6">
+                        <div class="w-10 h-10 bg-sage-100 text-sage-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <i data-lucide="inbox" class="w-5 h-5"></i>
+                        </div>
+                        <p class="text-stone-700 font-bold text-xs">No deposits found</p>
+                        <p class="text-[11px] text-stone-400 mt-0.5">Tap '+' above to record a new fixed deposit.</p>
+                    </div>
+                `;
+          lucide.createIcons();
+          return;
+        }
 
-          get activeDepositsCount() {
-            return this.deposits.filter((d) => !this.isMatured(d.endDate))
-              .length;
-          },
+        if (viewMode === "cards") {
+          let html = '<div class="space-y-3">';
+          sortedDeposits.forEach((item) => {
+            const status = getItemStatus(item.endDate);
+            const isActive = status === "Active";
+            const statusBadgeClass = isActive
+              ? "bg-sage-100 text-sage-700 border-sage-200"
+              : "bg-stone-100 text-stone-500 border-stone-200";
 
-          get maturedDepositsCount() {
-            return this.deposits.filter((d) => this.isMatured(d.endDate))
-              .length;
-          },
+            const interestTotal = (
+              parseFloat(item.principal) + parseFloat(item.interest)
+            ).toLocaleString("en-US", { minimumFractionDigits: 2 });
 
-          get totalPrincipal() {
-            return this.deposits.reduce(
-              (sum, item) => sum + Number(item.principal || 0),
-              0,
-            );
-          },
+            html += `
+                        <div class="bg-white rounded-3xl p-4 border border-stone-200/70 shadow-2xs hover:shadow-xs transition-shadow relative overflow-hidden">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <div class="flex items-center space-x-2">
+                                        <h4 class="font-bold text-stone-800 text-base">${escapeHtml(item.bankName)}</h4>
+                                        <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full border ${statusBadgeClass}">
+                                            ${status}
+                                        </span>
+                                    </div>
+                                    ${item.remarks ? `<p class="text-xs text-stone-400 font-medium mt-0.5">${escapeHtml(item.remarks)}</p>` : ""}
+                                    <p class="text-[11px] text-stone-500 font-mono mt-0.5">Acc: ${escapeHtml(item.accountNo)}</p>
+                                </div>
 
-          get totalInterest() {
-            return this.deposits.reduce(
-              (sum, item) =>
-                sum +
-                this.calcInterest(
-                  item.principal,
-                  item.interestRate,
-                  item.months,
-                ),
-              0,
-            );
-          },
+                                <div class="flex space-x-1">
+                                    <button onclick="editDeposit('${item.id}')" class="p-1.5 text-stone-400 hover:text-sage-600 rounded-lg hover:bg-stone-100 transition-colors">
+                                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                    <button onclick="deleteDeposit('${item.id}')" class="p-1.5 text-stone-400 hover:text-red-500 rounded-lg hover:bg-stone-100 transition-colors">
+                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                </div>
+                            </div>
 
-          calcInterest(principal, rate, months) {
-            const p = Number(principal) || 0;
-            const r = Number(rate) || 0;
-            const m = Number(months) || 0;
-            return p * (r / 100) * (m / 12);
-          },
+                            <div class="grid grid-cols-2 gap-2 my-2.5 py-2 px-3 bg-paper-card rounded-2xl border border-stone-100 text-xs">
+                                <div>
+                                    <span class="text-[10px] text-stone-400 block font-medium">Principal (${item.annualRate}% p.a.)</span>
+                                    <span class="font-bold text-stone-800 text-xs">$${parseFloat(item.principal).toLocaleString("en-US", { minimumFractionDigits: 2 })}</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-[10px] text-coral-500 block font-semibold">Interest (${item.months} M)</span>
+                                    <span class="font-bold text-coral-600 text-xs">+$${parseFloat(item.interest).toLocaleString("en-US", { minimumFractionDigits: 2 })}</span>
+                                </div>
+                            </div>
 
-          formatCurrency(amount) {
-            return (
-              "$" +
-              Number(amount).toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })
-            );
-          },
+                            <div class="flex justify-between items-center text-xs text-stone-500 pt-0.5">
+                                <div class="flex items-center space-x-1 text-[11px]">
+                                    <i data-lucide="calendar" class="w-3 h-3 text-stone-400"></i>
+                                    <span>${item.startDate} → <strong class="text-stone-700">${item.endDate}</strong></span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-[9px] text-stone-400 block">Total Maturity</span>
+                                    <span class="font-extrabold text-stone-800 text-xs">$${interestTotal}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+          });
+          html += "</div>";
+          container.innerHTML = html;
+        } else {
+          let html = `
+                    <div class="bg-white rounded-3xl border border-stone-200/70 overflow-hidden shadow-2xs">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-paper-dark border-b border-stone-200/80 text-stone-500 font-bold uppercase text-[9px] tracking-wider">
+                                    <tr>
+                                        <th class="p-2.5">Bank / Acc</th>
+                                        <th class="p-2.5">Status</th>
+                                        <th class="p-2.5">Principal</th>
+                                        <th class="p-2.5">Rate</th>
+                                        <th class="p-2.5">Term</th>
+                                        <th class="p-2.5">Interest</th>
+                                        <th class="p-2.5">Start / Maturity</th>
+                                        <th class="p-2.5 text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-stone-100 text-stone-700">
+                `;
 
-          formatCurrencyShort(amount) {
-            const num = Number(amount) || 0;
-            if (num >= 1000000) return "$" + (num / 1000000).toFixed(1) + "M";
-            if (num >= 1000) return "$" + (num / 1000).toFixed(1) + "k";
-            return "$" + num.toFixed(0);
-          },
+          sortedDeposits.forEach((item) => {
+            const status = getItemStatus(item.endDate);
+            const statusBadgeClass =
+              status === "Active"
+                ? "bg-sage-100 text-sage-700"
+                : "bg-stone-100 text-stone-500";
 
-          updateEndDate() {
-            if (!this.form.startDate || !this.form.months) return;
-            let start = new Date(this.form.startDate);
-            if (isNaN(start.getTime())) return;
-            start.setMonth(start.getMonth() + Number(this.form.months));
-            this.form.endDate = start.toISOString().split("T")[0];
-          },
+            html += `
+                        <tr class="hover:bg-paper-card/50 transition-colors">
+                            <td class="p-2.5 font-medium">
+                                <div class="font-bold text-stone-800">${escapeHtml(item.bankName)}</div>
+                                <div class="text-[9px] text-stone-400">${escapeHtml(item.remarks || "")}</div>
+                                <div class="text-[9px] text-stone-500 font-mono">${escapeHtml(item.accountNo)}</div>
+                            </td>
+                            <td class="p-2.5">
+                                <span class="px-2 py-0.5 rounded-full text-[9px] font-bold ${statusBadgeClass}">${status}</span>
+                            </td>
+                            <td class="p-2.5 font-bold text-stone-800">$${parseFloat(item.principal).toLocaleString("en-US")}</td>
+                            <td class="p-2.5"><span class="bg-sage-100 text-sage-700 px-1.5 py-0.5 rounded font-bold text-[10px]">${item.annualRate}%</span></td>
+                            <td class="p-2.5">${item.months} M</td>
+                            <td class="p-2.5 font-bold text-coral-600">+$${parseFloat(item.interest).toLocaleString("en-US", { minimumFractionDigits: 2 })}</td>
+                            <td class="p-2.5 font-semibold text-stone-700 text-[10px]">
+                                <div>${item.startDate}</div>
+                                <div class="text-stone-400">to ${item.endDate}</div>
+                            </td>
+                            <td class="p-2.5 text-center">
+                                <div class="flex items-center justify-center space-x-1">
+                                    <button onclick="editDeposit('${item.id}')" class="p-1 text-stone-400 hover:text-sage-600">
+                                        <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                    <button onclick="deleteDeposit('${item.id}')" class="p-1 text-stone-400 hover:text-red-500">
+                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+          });
 
-          openAddModal() {
-            this.isEditing = false;
-            this.currentId = null;
-            this.form = {
-              bankName: "",
-              accountNo: "",
-              notes: "",
-              principal: 100000,
-              startDate: new Date().toISOString().split("T")[0],
-              endDate: "",
-              interestRate: 3.8,
-              months: 12,
+          html += `
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+          container.innerHTML = html;
+        }
+
+        lucide.createIcons();
+      }
+
+      // MODAL HANDLERS
+      function openModal(editId = null) {
+        const modal = document.getElementById("modal");
+        const modalContent = modal.firstElementChild;
+        const form = document.getElementById("fd-form");
+
+        if (editId) {
+          const item = deposits.find((d) => d.id === editId);
+          if (item) {
+            document.getElementById("modal-title").innerText =
+              "Edit Fixed Deposit";
+            document.getElementById("entry-id").value = item.id;
+            document.getElementById("bank-name").value = item.bankName;
+            document.getElementById("remarks").value = item.remarks || "";
+            document.getElementById("account-no").value = item.accountNo;
+            document.getElementById("principal").value = item.principal;
+            document.getElementById("annual-rate").value = item.annualRate;
+            document.getElementById("months").value = item.months;
+            document.getElementById("start-date").value = item.startDate;
+            document.getElementById("end-date").value = item.endDate;
+          }
+        } else {
+          document.getElementById("modal-title").innerText =
+            "New Fixed Deposit";
+          form.reset();
+          document.getElementById("entry-id").value = "";
+          setTodayAsDefaultFormDate();
+        }
+
+        recalculateInterest();
+
+        modal.classList.remove("pointer-events-none", "opacity-0");
+        modalContent.classList.remove("translate-y-10");
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("modal");
+        const modalContent = modal.firstElementChild;
+
+        modal.classList.add("pointer-events-none", "opacity-0");
+        modalContent.classList.add("translate-y-10");
+      }
+
+      function handleFormSubmit(e) {
+        e.preventDefault();
+
+        const id = document.getElementById("entry-id").value;
+        const bankName = document.getElementById("bank-name").value.trim();
+        const remarks = document.getElementById("remarks").value.trim();
+        const accountNo = document.getElementById("account-no").value.trim();
+        const principal = parseFloat(
+          document.getElementById("principal").value,
+        );
+        const annualRate = parseFloat(
+          document.getElementById("annual-rate").value,
+        );
+        const months = parseInt(document.getElementById("months").value);
+        const startDate = document.getElementById("start-date").value;
+        const endDate = document.getElementById("end-date").value;
+
+        const interest = calculateInterest(principal, annualRate, months);
+
+        if (id) {
+          const index = deposits.findIndex((d) => d.id === id);
+          if (index !== -1) {
+            deposits[index] = {
+              ...deposits[index],
+              bankName,
+              remarks,
+              accountNo,
+              principal,
+              annualRate,
+              months,
+              startDate,
+              endDate,
+              interest,
             };
-            this.updateEndDate();
-            this.isModalOpen = true;
-          },
+          }
+        } else {
+          const newItem = {
+            id: "fd-" + Date.now(),
+            bankName,
+            remarks,
+            accountNo,
+            principal,
+            annualRate,
+            months,
+            startDate,
+            endDate,
+            interest,
+            createdAt: Date.now(),
+          };
+          deposits.unshift(newItem);
+        }
 
-          editDeposit(item) {
-            this.isEditing = true;
-            this.currentId = item.id;
-            this.form = { ...item };
-            this.isModalOpen = true;
-          },
+        saveDeposits();
+        closeModal();
+        renderSwipableCalendar();
+        renderDashboard();
+      }
 
-          saveDeposit() {
-            if (this.isEditing) {
-              const idx = this.deposits.findIndex(
-                (d) => d.id === this.currentId,
-              );
-              if (idx !== -1) {
-                this.deposits[idx] = { ...this.form, id: this.currentId };
-              }
-            } else {
-              const newItem = {
-                ...this.form,
-                id: Date.now().toString(),
-              };
-              this.deposits.push(newItem);
-            }
-            this.saveToStorage();
-            this.isModalOpen = false;
-          },
+      function editDeposit(id) {
+        openModal(id);
+      }
 
-          deleteDeposit(id) {
-            if (confirm("Delete this deposit record? 🐾")) {
-              this.deposits = this.deposits.filter((d) => d.id !== id);
-              this.saveToStorage();
-            }
-          },
-        };
+      function deleteDeposit(id) {
+        if (confirm("Are you sure you want to delete this deposit record?")) {
+          deposits = deposits.filter((d) => d.id !== id);
+          saveDeposits();
+          renderSwipableCalendar();
+          renderDashboard();
+        }
+      }
+
+      function escapeHtml(text) {
+        if (!text) return "";
+        return text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
       }
     </script>
   </body>
